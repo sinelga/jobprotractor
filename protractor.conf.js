@@ -10,6 +10,7 @@ exports.config = {
 
   capabilities: {
     'browserName': 'chrome',
+//    'browserName': 'firefox',
     'chromeOptions': {'args': ['--disable-extensions']}
   },
 
@@ -23,6 +24,6 @@ exports.config = {
     isVerbose: false,
     showColors: true,
     includeStackTrace: true,
-    defaultTimeoutInterval: 10000
+    defaultTimeoutInterval: 1000000
   }
 };
