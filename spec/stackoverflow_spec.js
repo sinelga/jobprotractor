@@ -1,6 +1,4 @@
-/**
- * 
- */
+
 
 'use strict';
 
@@ -9,7 +7,7 @@ require('dotenv').load();
 var MongoClient = require('mongodb').MongoClient, assert = require('assert');
 var url = 'mongodb://localhost:27017/remotejob';
 
-var page=55;
+var page=2;
 //last page=14;
 //var pos =24;
 
@@ -56,6 +54,7 @@ myTags["xml"]="6 years";
 myTags["json"]="4 years";
 myTags["hibernate"]="3 years";
 myTags["jpa"]="6 years";
+myTags["ejb"]="2 years";
 myTags["jquery"]="2 years";
 myTags["tcpip"]="20 years";
 myTags["tomcat"]="4 years";
@@ -88,6 +87,7 @@ myTags["xslt"]="2 years";
 myTags["docker"]="1 year";
 myTags["google-app-engine"]="5 years";
 myTags["unit-testing"]="5 years";
+myTags["integration-testing"]="2 years";
 myTags["gruntjs"]="2 years";
 myTags["frontend"]="6 years";
 myTags["couchbase"]="1 year";
@@ -122,6 +122,7 @@ myTags["webserver"]="20 years";
 myTags["apache"]="5 years";
 myTags["jetty"]="4 years";
 myTags["sql-server-administration"]="18 years";
+myTags["sql-server"]="18 years";
 myTags["smtp"]="10 years";
 myTags["selenium"]="1 year";
 myTags["selenium-webdriver"]="1 year";
@@ -139,7 +140,12 @@ myTags["voip"]="16 years";
 myTags["cisco"]="1 year";
 myTags["cisco-ios"]="1 year";
 myTags["sip"]="10 years";
-//myTags[""]=" years";
+myTags["ant"]="5 years";
+myTags["ajax"]="5 years";
+myTags["web-api"]="5 years";
+myTags["js"]="4 years";
+myTags["networking"]="18 years";
+myTags["jdbc"]="5 years";
 //myTags[""]=" years";
 //myTags[""]=" years";
 
@@ -150,7 +156,7 @@ var coverletter =[
 "Particularly I can be useful in Telecommunication, Web Application, Database fields.",
 "My speaking languages: English,Italian,Russian.",
 "But I am living in Finland.",
-"Actually my projects mostly Web App: Angularjs <---> backend (GoLang/Nodejs)",
+"Actually my projects mostly Web App: JavaScript (Angularjs) <---> backend (GoLang/Nodejs)",
 "Development: Eclipse <--->  GitHub.",
 "I hope you find all necessary information on Sites. http://mazurov.eu https://github.com/sinelga"
  ].join("\n");
