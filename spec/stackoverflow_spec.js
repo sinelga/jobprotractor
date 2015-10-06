@@ -1,5 +1,4 @@
 
-
 'use strict';
 
 require('dotenv').load();
@@ -7,7 +6,7 @@ require('dotenv').load();
 var MongoClient = require('mongodb').MongoClient, assert = require('assert');
 var url = 'mongodb://localhost:27017/remotejob';
 
-var page=16;
+var page=6;
 //last page=14;
 //var pos =24;
 
@@ -176,10 +175,9 @@ var coverletter =[
  ].join("\n");
 
 function insertinDB(employer_name,employer_location,employer_joblink_href,employer_tags,cb){
-//	
+	
 	MongoClient.connect(url,function(err, db) {
 		assert.equal(null,err);
-//		console.log("Connected correctly to server");
 
 		var collection = db.collection('employers');
 		var currentTime = new Date();
@@ -207,10 +205,9 @@ function insertinDB(employer_name,employer_location,employer_joblink_href,employ
 };
 
 function markasManulDB(employer_name,employer_location,employer_joblink_href,employer_tags,cb){
-//	
+	
 	MongoClient.connect(url,function(err, db) {
 		assert.equal(null,err);
-//		console.log("Connected correctly to server");
 
 		var collection = db.collection('employers');
 
@@ -239,8 +236,8 @@ function markasManulDB(employer_name,employer_location,employer_joblink_href,emp
 function addExternalLinkDB(employer_name,employer_location,employer_joblink_href,employer_tags,employer_extlink,cb){
 //	
 	MongoClient.connect(url,function(err, db) {
+
 		assert.equal(null,err);
-//		console.log("Connected correctly to server");
 
 		var collection = db.collection('employers');
 
@@ -256,8 +253,7 @@ function addExternalLinkDB(employer_name,employer_location,employer_joblink_href
 				  { $set: {extlink: employer_extlink}},
 
 				  {}, // options
-				  function(err, object) {
-					  
+				  function(err, object) {					  
 					  cb(err, object);
 					  db.close();
 				      
@@ -304,6 +300,7 @@ describe('stackoverflow.com all jobs',function() {
 			});
 
 			it('get all jobs',function() {
+				
 						browser.ignoreSynchronization = true;
 						browser.get('http://careers.stackoverflow.com/jobs?sort=p&pg='+page);
 
@@ -320,13 +317,13 @@ describe('stackoverflow.com all jobs',function() {
 						
 							var alljobs = element.all(by.css('.listResults .-item'));
 						
-							alljobs.get(pos).element(by.css('.job-link')).getAttribute('href').then(function(result) {
-							
-								if (result !== null) {
-									console.info("submit ->",result);
-								}
-							
-							});
+//							alljobs.get(pos).element(by.css('.job-link')).getAttribute('href').then(function(result) {
+//							
+//								if (result !== null) {
+//									console.info("submit ->",result);
+//								}
+//							
+//							});
 						
 
 						alljobs.get(pos).element(by.css('.job-link')).click().then(function(result) {
@@ -389,12 +386,9 @@ describe('stackoverflow.com all jobs',function() {
 											
 											
 										if (result) {
-										
-										
+																				
 										var submitButtton = element(by.css('.careers-btn'));
-										
-										
-										
+																														
 										submitButtton.getAttribute('data-scjid').then(function(result) {
 											
 											if (result) {
@@ -421,8 +415,7 @@ describe('stackoverflow.com all jobs',function() {
 																	
 																	if (result) {
 																		browser.switchTo().frame(browser.driver.findElement(by.id('CoverLetter_ifr'))).then(function(result) {
-																																																				
-																																		
+																																																																																						
 																		expect(element(by.id('tinymce')).isPresent()).toBe(true);
 																		browser.driver.findElement(by.id('tinymce')).clear();
 																		
@@ -443,13 +436,16 @@ describe('stackoverflow.com all jobs',function() {
 																		}																
 																																		
 																		browser.driver.findElement(by.id('tinymce')).sendKeys(coverletter);
-																																		
 																		
+																		
+//																		console.info("try swith back");
+																		browser.driver.sleep(5000);
 																		browser.driver.switchTo().defaultContent();
+//																		browser.driver.switchTo();
 																																		
 																		browser.driver.findElement(by.tagName('button')).click().then(function(result) {
 
-																			browser.driver.sleep(2000);
+																			browser.driver.sleep(5000);
 																																				
 																			
 																			element(by.css('.test-apply-useresume')).isPresent().then(function(result) {
@@ -475,9 +471,13 @@ describe('stackoverflow.com all jobs',function() {
 																			});
 																																			
 																		});
-																		browser.driver.sleep(5000);
+//																		browser.driver.sleep(5000);
+//																		console.info("try swith back");
+//																		browser.switchTo().defaultContent();//last
 																		
 																		});
+																		
+
 																		
 																	} else {
 																		
@@ -488,8 +488,7 @@ describe('stackoverflow.com all jobs',function() {
 																			
 																		});
 																																		
-																	}
-																	
+																	}																																		
 																	
 																});
 																																												
@@ -515,10 +514,7 @@ describe('stackoverflow.com all jobs',function() {
 														});
 
 													});
-												
-												
-												
-												
+																																				
 												
 												
 											}
@@ -529,8 +525,7 @@ describe('stackoverflow.com all jobs',function() {
 										submitButtton.getAttribute('href').isPresent().then(function(result) {
 											
 											if (result) {
-												
-												
+																								
 												submitButtton.getAttribute('href').then(function(result) {
 													
 													if (result !== null) {
@@ -544,133 +539,130 @@ describe('stackoverflow.com all jobs',function() {
 														
 													}
 													
-												});
-												
+												});												
 												
 											}
-											
-											
-											
+																																	
 										});
 										
 																				
 																				
 										
-										submitButtton.click().then(function(result) {
-											
-											browser.driver.sleep(2000);
-																						
-											var allframes = element.all(by.tagName('iframe')).then(function(result) {
-												
-												console.log("result ifframe 2",result.length);
-												
-												if (result.length > 0) {
-												
-												var applyframe = result[result.length - 1];
-												
-												applyframe.getAttribute('src').then(function(result) {
-													
-													
-													browser.driver.get(result).then(function(result) {
-														
-														element(by.id('CoverLetter_ifr')).isPresent().then(function(result) {
-															
-															if (result) {
-																browser.switchTo().frame(browser.driver.findElement(by.id('CoverLetter_ifr'))).then(function(result) {
-																																																		
-																																
-																expect(element(by.id('tinymce')).isPresent()).toBe(true);
-																browser.driver.findElement(by.id('tinymce')).clear();
-																
-																																
-																if (myexperience.length >0 ){
-																	
-																	browser.driver.findElement(by.id('tinymce')).sendKeys("My myexperience:\n");
-																	
-																	for (var i=0; i < myexperience.length; i++){
-																		
-																		browser.driver.findElement(by.id('tinymce')).sendKeys(myexperience[i]);
-																		
-																	}
-																																																			
-																} else {
-																	browser.driver.findElement(by.id('tinymce')).sendKeys("For consideration only:\n");
-																	
-																}																
-																																
-																browser.driver.findElement(by.id('tinymce')).sendKeys(coverletter);
-																																
-																
-																browser.driver.switchTo().defaultContent();
-																																
-																browser.driver.findElement(by.tagName('button')).click().then(function(result) {
-
-																	browser.driver.sleep(2000);
-																																		
-																	
-																	element(by.css('.test-apply-useresume')).isPresent().then(function(result) {
-																		
-//																		console.info(".test-apply-useresume ",result);
-																		
-																		element(by.css('.test-apply-useresume')).getText().then(function(result) {
-																			
-																			console.info(".test-apply-useresume ",result);
-																		});
-																		
-																		if (result) {
-																			
-																			element(by.css('.test-apply-useresume')).click().then(function(result) {
-																				
-																				browser.driver.sleep(1000);
-																				element(by.css('.test-apply-submit')).click();
-																																								
-																			});																			
-																			
-																		}
-																																																						
-																	});
-																																	
-																});
-																browser.driver.sleep(5000);
-																
-																});
-																
-															} else {
-																
-																console.info('CoverLetter_ifr Not present');
-																
-																markasManulDB(employer_name,employer_location,employer_joblink_href,employer_tags,function(err, object){
-																	console.log("err->",err,"obj>", object.value.hits);
-																	
-																});
-																																
-															}
-															
-															
-														});
-																																										
-													
-													});
-													
-													
-												});
-																								
-												
-												} else {// no frame 
-													
-													console.info('Not frame so manual');
-													
-													
-													markasManulDB(employer_name,employer_location,employer_joblink_href,employer_tags,function(err, object){
-														console.log("err->",err,"obj>", object.value.hits);
-														
-													});																										
-													
-												}
-													
-												});
-
-											});
+//										submitButtton.click().then(function(result) {
+//											
+//											browser.driver.sleep(2000);
+//																						
+//											var allframes = element.all(by.tagName('iframe')).then(function(result) {
+//												
+//												console.log("result ifframe 2",result.length);
+//												
+//												if (result.length > 0) {
+//												
+//												var applyframe = result[result.length - 1];
+//												
+//												applyframe.getAttribute('src').then(function(result) {
+//													
+//													
+//													browser.driver.get(result).then(function(result) {
+//														
+//														element(by.id('CoverLetter_ifr')).isPresent().then(function(result) {
+//															
+//															if (result) {
+//																browser.switchTo().frame(browser.driver.findElement(by.id('CoverLetter_ifr'))).then(function(result) {
+//																																																		
+//																																
+//																expect(element(by.id('tinymce')).isPresent()).toBe(true);
+//																browser.driver.findElement(by.id('tinymce')).clear();
+//																
+//																																
+//																if (myexperience.length >0 ){
+//																	
+//																	browser.driver.findElement(by.id('tinymce')).sendKeys("My myexperience:\n");
+//																	
+//																	for (var i=0; i < myexperience.length; i++){
+//																		
+//																		browser.driver.findElement(by.id('tinymce')).sendKeys(myexperience[i]);
+//																		
+//																	}
+//																																																			
+//																} else {
+//																	browser.driver.findElement(by.id('tinymce')).sendKeys("For consideration only:\n");
+//																	
+//																}																
+//																																
+//																browser.driver.findElement(by.id('tinymce')).sendKeys(coverletter);
+//																																
+//																
+//																browser.driver.switchTo().defaultContent();
+//																																
+//																browser.driver.findElement(by.tagName('button')).click().then(function(result) {
+//
+//																	browser.driver.sleep(2000);
+//																																		
+//																	
+//																	element(by.css('.test-apply-useresume')).isPresent().then(function(result) {
+//																		
+////																		console.info(".test-apply-useresume ",result);
+//																		
+//																		element(by.css('.test-apply-useresume')).getText().then(function(result) {
+//																			
+//																			console.info(".test-apply-useresume ",result);
+//																		});
+//																		
+//																		if (result) {
+//																			
+//																			element(by.css('.test-apply-useresume')).click().then(function(result) {
+//																				
+//																				browser.driver.sleep(1000);
+//																				element(by.css('.test-apply-submit')).click();
+//																																								
+//																			});																			
+//																			
+//																		}
+//																																																						
+//																	});
+//																																	
+//																});
+//																browser.driver.sleep(5000);
+//																
+//																});
+//																
+//															} else {
+//																
+//																console.info('CoverLetter_ifr Not present');
+//																
+//																markasManulDB(employer_name,employer_location,employer_joblink_href,employer_tags,function(err, object){
+//																	console.log("err->",err,"obj>", object.value.hits);
+//																	
+//																});
+//																																
+//															}
+//															
+//															
+//														});
+//																																										
+//													
+//													});
+//													
+//													
+//												});
+//																								
+//												
+//												} else {// no frame 
+//													
+//													console.info('Not frame so manual');
+//													
+//													
+//													markasManulDB(employer_name,employer_location,employer_joblink_href,employer_tags,function(err, object){
+//														console.log("err->",err,"obj>", object.value.hits);
+//														
+//													});																										
+//													
+//												}
+//													
+//												});
+//
+//											});
 										
 										
 										
@@ -706,7 +698,7 @@ describe('stackoverflow.com all jobs',function() {
 						
 						});
 
-						browser.driver.sleep(15000);
+						browser.driver.sleep(10000);
 
 					
 						

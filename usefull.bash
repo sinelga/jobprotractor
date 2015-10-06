@@ -2,7 +2,15 @@
  
  
  
+ 
  db.employers.find().sort({_id:-1})
+ db.getCollection('employers').find({$gte : new ISODate("2015-10-04T03:39:31.480Z")})
+ db.getCollection('employers').find({$gte : new ISODate("2015-10-04T00:00:00.000Z")})
+ 
+  db.employers.find().sort({date: {$gte : new ISODate("2015-10-04T03:39:31.480Z")}})
+  
+  db.employers.find({date: {$gte : new ISODate("2015-10-04T00:00:00.000Z")}})
+ 
  
  
   UnknownError: unknown error: unhandled inspector error: {"code":-32603,"message":"Cannot navigate to invalid URL"}
