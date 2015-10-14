@@ -6,7 +6,7 @@ require('dotenv').load();
 var MongoClient = require('mongodb').MongoClient, assert = require('assert');
 var url = 'mongodb://localhost:27017/remotejob';
 
-var page=8;
+var page=1;
 //last page=14;
 //var pos =24;
 
@@ -161,7 +161,6 @@ myTags["amazon-s3"]="1 years";
 //myTags[""]=" years";
 
 
-
 var coverletter =[
 "Hello! I'am Alex Mazurov.",
 "I started use Linux from kernel 0.98 version it was 1993 and I still use it. So if you are need any kind support in programming and/or your business based on Linux it's right place.",
@@ -198,8 +197,7 @@ function insertinDB(employer_name,employer_location,employer_joblink_href,employ
 					  cb(err, object);
 					  db.close();
 				      
-				  });
-		
+				  });		
 	});
 		
 };
@@ -222,13 +220,11 @@ function markasManulDB(employer_name,employer_location,employer_joblink_href,emp
 				  [['_id','asc']],  // sort order
 				  { $set: {manual: true }},
 				  {}, // options
-				  function(err, object) {
-					  
+				  function(err, object) {					  
 					  cb(err, object);
 					  db.close();
 				      
-				  });
-		
+				  });		
 	});
 		
 };
@@ -257,8 +253,7 @@ function addExternalLinkDB(employer_name,employer_location,employer_joblink_href
 					  cb(err, object);
 					  db.close();
 				      
-				  });
-		
+				  });		
 	});
 		
 };
@@ -284,13 +279,10 @@ describe('stackoverflow.com all jobs',function() {
 				
 				browser.ignoreSynchronization = true;
 				browser.get('http://careers.stackoverflow.com');
-				
-				
+								
 				element(by.css('.-item .test-login')).isPresent().then(function(result) {
 					
 					if (result) {
-						
-						console.info("found login buttom");
 						
 						var loginButtton = element(by.css('.-item .test-login'));
 						
@@ -490,7 +482,7 @@ describe('stackoverflow.com all jobs',function() {
 																																		
 																		browser.driver.findElement(by.id('tinymce')).sendKeys(coverletter);
 
-																		browser.driver.sleep(5000);
+																		browser.driver.sleep(15000);
 																		browser.driver.switchTo().defaultContent();
 																																		
 																		browser.driver.findElement(by.tagName('button')).click().then(function(result) {
@@ -500,10 +492,10 @@ describe('stackoverflow.com all jobs',function() {
 																			
 																			element(by.css('.test-apply-useresume')).isPresent().then(function(result) {
 																				
-																				element(by.css('.test-apply-useresume')).getText().then(function(result) {
-																					
-																					console.info(".test-apply-useresume ",result);
-																				});
+//																				element(by.css('.test-apply-useresume')).getText().then(function(result) {
+//																					
+//																					console.info(".test-apply-useresume ",result);
+//																				});
 																				
 																				if (result) {
 																					
