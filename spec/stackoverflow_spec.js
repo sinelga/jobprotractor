@@ -6,7 +6,7 @@ require('dotenv').load();
 var MongoClient = require('mongodb').MongoClient, assert = require('assert');
 var url = 'mongodb://localhost:27017/remotejob';
 
-var page=6;
+var page=8;
 //last page=14;
 //var pos =24;
 
@@ -280,22 +280,83 @@ describe('stackoverflow.com all jobs',function() {
 
 			it('make login by', function() {
 				
+				console.info(fblogin+"-----"+fbpass);
+				
 				browser.ignoreSynchronization = true;
 				browser.get('http://careers.stackoverflow.com');
 				
-				element(by.css('.-item .test-login')).click().then(function(result) {
+				
+				element(by.css('.-item .test-login')).isPresent().then(function(result) {
 					
-					element(by.css('.facebook')).click().then(function(result) {
+					if (result) {
 						
-						element(by.id('email')).sendKeys(fblogin);
-						element(by.id('pass')).sendKeys(fbpass);
-						element(by.id('u_0_2')).click().then(function(result) {
-																					
+						console.info("found login buttom");
+						
+						var loginButtton = element(by.css('.-item .test-login'));
+						
+						loginButtton.click().then(function(result) {
+							
+							browser.driver.sleep(5000);
+							
+							element(by.css('.facebook')).isPresent().then(function(result) {
+								
+								if (result) {
+									console.info("found facebook login buttom");
+									var loginFacebookButtton = element(by.css('.facebook'));
+									
+									loginFacebookButtton.click().then(function(result) {
+										
+										browser.driver.sleep(5000);
+										element(by.id('email')).sendKeys(fblogin);
+										element(by.id('pass')).sendKeys(fbpass);
+										element(by.id('u_0_2')).click().then(function(result) {
+																									
+										});
+										
+										
+									});
+									
+								} else {
+									
+									console.info("NOT found facebook login buttom");
+									
+								}
+								
+								
+							});
+							
+							
+							
 						});
-																		
+						
+						
+						
+						
+					} else {
+						
+						console.info("NOT found login buttom");
+					}
+						
+						
+						
+						
 					});
-																
-				});
+				
+				
+//				element(by.css('.-item .test-login')).click().then(function(result) {
+//					
+//					element(by.css('.facebook')).click().then(function(result) {
+//						
+//						browser.driver.sleep(5000);
+//						element(by.id('email')).sendKeys(fblogin);
+//						element(by.id('pass')).sendKeys(fbpass);
+//						element(by.id('u_0_2')).click().then(function(result) {
+//																					
+//						});
+//																		
+//					});
+//																
+//				});
 
 			});
 
@@ -316,14 +377,6 @@ describe('stackoverflow.com all jobs',function() {
 							browser.get('http://careers.stackoverflow.com/jobs?sort=p&pg='+page);	
 						
 							var alljobs = element.all(by.css('.listResults .-item'));
-						
-//							alljobs.get(pos).element(by.css('.job-link')).getAttribute('href').then(function(result) {
-//							
-//								if (result !== null) {
-//									console.info("submit ->",result);
-//								}
-//							
-//							});
 						
 
 						alljobs.get(pos).element(by.css('.job-link')).click().then(function(result) {
@@ -436,12 +489,9 @@ describe('stackoverflow.com all jobs',function() {
 																		}																
 																																		
 																		browser.driver.findElement(by.id('tinymce')).sendKeys(coverletter);
-																		
-																		
-//																		console.info("try swith back");
+
 																		browser.driver.sleep(5000);
 																		browser.driver.switchTo().defaultContent();
-//																		browser.driver.switchTo();
 																																		
 																		browser.driver.findElement(by.tagName('button')).click().then(function(result) {
 
@@ -449,8 +499,6 @@ describe('stackoverflow.com all jobs',function() {
 																																				
 																			
 																			element(by.css('.test-apply-useresume')).isPresent().then(function(result) {
-																				
-//																				console.info(".test-apply-useresume ",result);
 																				
 																				element(by.css('.test-apply-useresume')).getText().then(function(result) {
 																					

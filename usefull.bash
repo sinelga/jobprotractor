@@ -1,3 +1,7 @@
+ 
+ export fblogin=
+ export fbpass=
+ 
  node_modules/.bin/webdriver-manager start
  
  
