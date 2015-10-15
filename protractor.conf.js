@@ -4,7 +4,7 @@ exports.config = {
 
   // Spec patterns are relative to the location of this config.
   specs: [
-    'spec/stackoverflow_spec.js'
+    'spec/stackoverflow_spec2.js'
 //    'spec/login_spec.js'
   ],
 
@@ -25,6 +25,6 @@ exports.config = {
     isVerbose: false,
     showColors: true,
     includeStackTrace: true,
-    defaultTimeoutInterval: 1000000
+    defaultTimeoutInterval: 1500000
   }
 };

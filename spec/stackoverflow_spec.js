@@ -259,6 +259,16 @@ function addExternalLinkDB(employer_name,employer_location,employer_joblink_href
 };
 
 
+function startLoop() {
+	
+	browser.ignoreSynchronization = true;
+	browser.get('http://careers.stackoverflow.com/jobs?sort=p&pg='+page);
+	
+	
+	
+};
+
+
 
 
 describe('stackoverflow.com all jobs',function() {
@@ -303,8 +313,7 @@ describe('stackoverflow.com all jobs',function() {
 										element(by.id('pass')).sendKeys(fbpass);
 										element(by.id('u_0_2')).click().then(function(result) {
 																									
-										});
-										
+										});										
 										
 									});
 									
@@ -312,43 +321,21 @@ describe('stackoverflow.com all jobs',function() {
 									
 									console.info("NOT found facebook login buttom");
 									
-								}
+								}								
 								
-								
-							});
-							
-							
+							});														
 							
 						});
-						
-						
-						
+																		
 						
 					} else {
 						
 						console.info("NOT found login buttom");
 					}
-						
-						
-						
+												
 						
 					});
-				
-				
-//				element(by.css('.-item .test-login')).click().then(function(result) {
-//					
-//					element(by.css('.facebook')).click().then(function(result) {
-//						
-//						browser.driver.sleep(5000);
-//						element(by.id('email')).sendKeys(fblogin);
-//						element(by.id('pass')).sendKeys(fbpass);
-//						element(by.id('u_0_2')).click().then(function(result) {
-//																					
-//						});
-//																		
-//					});
-//																
-//				});
+								
 
 			});
 
@@ -370,10 +357,11 @@ describe('stackoverflow.com all jobs',function() {
 						
 							var alljobs = element.all(by.css('.listResults .-item'));
 						
-
+											
 						alljobs.get(pos).element(by.css('.job-link')).click().then(function(result) {
-
+										
 						browser.driver.sleep(1600);
+						console.log("I am here 1");
 						
 						element(by.id('hed')).isPresent().then(function(result) {
 							
@@ -384,11 +372,9 @@ describe('stackoverflow.com all jobs',function() {
 								employer_joblink_href= result;
 								
 							});
-																					
-							
+																												
 							element(by.id('hed')).element(by.css('.employer')).getText().then(function(result) {
-								employer_name = result;
-								
+								employer_name = result;								
 							});
 							
 							element.all(by.css('.post-tag')).getText().then(function(result) {
@@ -397,8 +383,7 @@ describe('stackoverflow.com all jobs',function() {
 								myexperience.length=0;
 								
 								for (var i=0; i < result.length; i++){
-									
-									
+																		
 									if (result[i] !=='') {
 											
 										employer_tags.push(result[i]);
@@ -407,29 +392,24 @@ describe('stackoverflow.com all jobs',function() {
 
 											myexperience.push(result[i]+" <---> "+myTags[result[i]]+"\n");												
 												
-										}
-																						
-									}									
-									
+										}																						
+									}																		
 								}
 																																								
 							});							
-							
-							
-							
+																					
 							element(by.id('hed')).element(by.css('.location')).getText().then(function(result) {
 								employer_location = result;
 								
 								insertinDB(employer_name,employer_location,employer_joblink_href,employer_tags,function(err, object){
 									
-									console.log("err->",err,"obj>", object.value.hits);
+//									console.log("err->",err,"obj>", object.value.hits);
 									browser.driver.sleep(2000);
-									
+																		
 									if (object.value.hits === 1) {
 										
 										element(by.css('.careers-btn')).isPresent().then(function(result) {
-											
-											
+																						
 										if (result) {
 																				
 										var submitButtton = element(by.css('.careers-btn'));
@@ -438,10 +418,11 @@ describe('stackoverflow.com all jobs',function() {
 											
 											if (result) {
 												console.info("submitButtton.get_data-scjid -->"+result);
-												
+												var scjid = result;
+																								
 												submitButtton.click().then(function(result) {
 													
-													browser.driver.sleep(2000);
+													browser.driver.sleep(10000);
 																								
 													var allframes = element.all(by.tagName('iframe')).then(function(result) {
 														
@@ -452,8 +433,7 @@ describe('stackoverflow.com all jobs',function() {
 														var applyframe = result[result.length - 1];
 														
 														applyframe.getAttribute('src').then(function(result) {
-															
-															
+																														
 															browser.driver.get(result).then(function(result) {
 																
 																element(by.id('CoverLetter_ifr')).isPresent().then(function(result) {
@@ -471,8 +451,7 @@ describe('stackoverflow.com all jobs',function() {
 																			
 																			for (var i=0; i < myexperience.length; i++){
 																				
-																				browser.driver.findElement(by.id('tinymce')).sendKeys(myexperience[i]);
-																				
+																				browser.driver.findElement(by.id('tinymce')).sendKeys(myexperience[i]);																				
 																			}
 																																																					
 																		} else {
@@ -482,28 +461,40 @@ describe('stackoverflow.com all jobs',function() {
 																																		
 																		browser.driver.findElement(by.id('tinymce')).sendKeys(coverletter);
 
-																		browser.driver.sleep(15000);
-																		browser.driver.switchTo().defaultContent();
-																																		
+																		browser.driver.sleep(5000);
+																		browser.driver.switchTo().defaultContent();																																		
 																		browser.driver.findElement(by.tagName('button')).click().then(function(result) {
 
 																			browser.driver.sleep(5000);
-																																				
-																			
+																																																						
 																			element(by.css('.test-apply-useresume')).isPresent().then(function(result) {
-																				
-//																				element(by.css('.test-apply-useresume')).getText().then(function(result) {
-//																					
-//																					console.info(".test-apply-useresume ",result);
-//																				});
 																				
 																				if (result) {
 																					
 																					element(by.css('.test-apply-useresume')).click().then(function(result) {
 																						
-																						browser.driver.sleep(1000);
-																						element(by.css('.test-apply-submit')).click();
-																																										
+																						console.log("Before submit job");
+																						browser.driver.sleep(5000);
+																						element(by.css('.test-apply-submit')).click().then(function(result) {
+																							console.log("after submit job ->",scjid);
+																							browser.driver.sleep(5000);
+																							startLoop();
+																							
+																							
+//																							console.log("https://careers.stackoverflow.com/jobs/"+scjid);
+																							
+//																							var url = browser.getCurrentUrl().getText();
+//																							url.getText().then(function(result) {
+//																								console.log("CurrentUrl",url)
+																								
+//																							});
+																							
+//																							browser.get('http://careers.stackoverflow.com/jobs?sort=p&pg='+page);
+//																							browser.get("https://careers.stackoverflow.com/jobs/"+scjid);
+																							browser.driver.sleep(10000);
+																																														
+																						});
+																																																																
 																					});																			
 																					
 																				}
@@ -511,55 +502,41 @@ describe('stackoverflow.com all jobs',function() {
 																			});
 																																			
 																		});
-//																		browser.driver.sleep(5000);
-//																		console.info("try swith back");
-//																		browser.switchTo().defaultContent();//last
-																		
-																		});
 																		
 
-																		
+																		});
+
+																																				
 																	} else {
 																		
-																		console.info('CoverLetter_ifr Not present');
-																		
+																		console.info('CoverLetter_ifr Not present');																		
 																		markasManulDB(employer_name,employer_location,employer_joblink_href,employer_tags,function(err, object){
 																			console.log("err->",err,"obj>", object.value.hits);
 																			
-																		});
-																																		
+																		});																																		
 																	}																																		
 																	
 																});
-																																												
-															
+																																																											
 															});
-															
-															
+																														
 														});
-																										
-														
+																																								
 														} else {// no frame 
 															
 															console.info('Not frame so manual');
-															
-															
+																														
 															markasManulDB(employer_name,employer_location,employer_joblink_href,employer_tags,function(err, object){
 																console.log("err->",err,"obj>", object.value.hits);
 																
-															});																										
-															
+															});																																									
 														}
 															
 														});
 
-													});
-																																				
-												
-												
+													});																																																
 											}
-											
-											
+																						
 										});
 										
 										submitButtton.getAttribute('href').isPresent().then(function(result) {
@@ -570,7 +547,7 @@ describe('stackoverflow.com all jobs',function() {
 													
 													if (result !== null) {
 													
-														console.info("applyNow button-> ",result);
+														console.info("applyNow button external link -> ",result);
 														
 														addExternalLinkDB(employer_name,employer_location,employer_joblink_href,employer_tags,result,function(err, object){
 															console.log("err->",err,"obj>", object.value.hits);
@@ -584,128 +561,7 @@ describe('stackoverflow.com all jobs',function() {
 											}
 																																	
 										});
-										
-																				
-																				
-										
-//										submitButtton.click().then(function(result) {
-//											
-//											browser.driver.sleep(2000);
-//																						
-//											var allframes = element.all(by.tagName('iframe')).then(function(result) {
-//												
-//												console.log("result ifframe 2",result.length);
-//												
-//												if (result.length > 0) {
-//												
-//												var applyframe = result[result.length - 1];
-//												
-//												applyframe.getAttribute('src').then(function(result) {
-//													
-//													
-//													browser.driver.get(result).then(function(result) {
-//														
-//														element(by.id('CoverLetter_ifr')).isPresent().then(function(result) {
-//															
-//															if (result) {
-//																browser.switchTo().frame(browser.driver.findElement(by.id('CoverLetter_ifr'))).then(function(result) {
-//																																																		
-//																																
-//																expect(element(by.id('tinymce')).isPresent()).toBe(true);
-//																browser.driver.findElement(by.id('tinymce')).clear();
-//																
-//																																
-//																if (myexperience.length >0 ){
-//																	
-//																	browser.driver.findElement(by.id('tinymce')).sendKeys("My myexperience:\n");
-//																	
-//																	for (var i=0; i < myexperience.length; i++){
-//																		
-//																		browser.driver.findElement(by.id('tinymce')).sendKeys(myexperience[i]);
-//																		
-//																	}
-//																																																			
-//																} else {
-//																	browser.driver.findElement(by.id('tinymce')).sendKeys("For consideration only:\n");
-//																	
-//																}																
-//																																
-//																browser.driver.findElement(by.id('tinymce')).sendKeys(coverletter);
-//																																
-//																
-//																browser.driver.switchTo().defaultContent();
-//																																
-//																browser.driver.findElement(by.tagName('button')).click().then(function(result) {
-//
-//																	browser.driver.sleep(2000);
-//																																		
-//																	
-//																	element(by.css('.test-apply-useresume')).isPresent().then(function(result) {
-//																		
-////																		console.info(".test-apply-useresume ",result);
-//																		
-//																		element(by.css('.test-apply-useresume')).getText().then(function(result) {
-//																			
-//																			console.info(".test-apply-useresume ",result);
-//																		});
-//																		
-//																		if (result) {
-//																			
-//																			element(by.css('.test-apply-useresume')).click().then(function(result) {
-//																				
-//																				browser.driver.sleep(1000);
-//																				element(by.css('.test-apply-submit')).click();
-//																																								
-//																			});																			
-//																			
-//																		}
-//																																																						
-//																	});
-//																																	
-//																});
-//																browser.driver.sleep(5000);
-//																
-//																});
-//																
-//															} else {
-//																
-//																console.info('CoverLetter_ifr Not present');
-//																
-//																markasManulDB(employer_name,employer_location,employer_joblink_href,employer_tags,function(err, object){
-//																	console.log("err->",err,"obj>", object.value.hits);
-//																	
-//																});
-//																																
-//															}
-//															
-//															
-//														});
-//																																										
-//													
-//													});
-//													
-//													
-//												});
-//																								
-//												
-//												} else {// no frame 
-//													
-//													console.info('Not frame so manual');
-//													
-//													
-//													markasManulDB(employer_name,employer_location,employer_joblink_href,employer_tags,function(err, object){
-//														console.log("err->",err,"obj>", object.value.hits);
-//														
-//													});																										
-//													
-//												}
-//													
-//												});
-//
-//											});
-										
-										
-										
+																																																																						
 										} else {
 											
 											console.info('not exist .careers-btn make manual');
@@ -713,34 +569,27 @@ describe('stackoverflow.com all jobs',function() {
 												console.log("err->",err,"obj>", object.value.hits);
 												
 											});		
-											
-											
+																						
 										}
 										
 										});//
 
 									} else {// old jobprovider	hits > 1	
-										
-										
-										console.info('Old employer hits > 1?');
+																				
+//										console.info('Old employer hits > 1?');
 																				
 									} 
-
 									
-										});
-									
+										});									
 																																																			
 								});
 										
 														
 							});
-																												
-						
+																																		
 						});
 
-						browser.driver.sleep(10000);
-
-					
+						browser.driver.sleep(10000);					
 						
 				}		//alljobs
 			}); //count pos		
