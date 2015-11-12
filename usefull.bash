@@ -4,7 +4,8 @@
  
  node_modules/.bin/webdriver-manager start
  
- 
+ show dbs
+ use remotejob
  
  
  db.employers.find().sort({_id:-1})
@@ -13,7 +14,9 @@
  
   db.employers.find().sort({date: {$gte : new ISODate("2015-10-04T03:39:31.480Z")}})
   
-  db.employers.find({date: {$gte : new ISODate("2015-10-04T00:00:00.000Z")}})
+  db.employers.find({date: {$gte : new ISODate("2015-11-12T00:00:00.000Z")}})
+  
+  db.employers.remove({date: {$gte : new ISODate("2015-11-12T00:00:00.000Z")}})
  
  
  

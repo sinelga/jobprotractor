@@ -361,7 +361,7 @@ describe('stackoverflow.com all jobs',function() {
 						alljobs.get(pos).element(by.css('.job-link')).click().then(function(result) {
 										
 						browser.driver.sleep(1600);
-						console.log("I am here 1");
+//						console.log("I am here 1");
 						
 						element(by.id('hed')).isPresent().then(function(result) {
 							
