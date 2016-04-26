@@ -7,6 +7,10 @@
  show dbs
  use remotejob
  
+ mongodump --dbpath  /var/lib/mongodb
+ mongorestore --dbpath /var/lib/mongodb dump
+ 
+ 
  
  db.employers.find().sort({_id:-1})
  db.getCollection('employers').find({$gte : new ISODate("2015-10-04T03:39:31.480Z")})
@@ -15,8 +19,13 @@
   db.employers.find().sort({date: {$gte : new ISODate("2015-10-04T03:39:31.480Z")}})
   
   db.employers.find({date: {$gte : new ISODate("2015-11-12T00:00:00.000Z")}})
-  
   db.employers.remove({date: {$gte : new ISODate("2015-11-12T00:00:00.000Z")}})
+  
+  db.employers.find({_id:ObjectId("5645675202293f75db08e399")})
+  
+  db.employers.find({joblink_href: "http://careers.stackoverflow.com/jobs/79639/software-engineer-kmklabs"})
+  
+  db.employers.ensureIndex( { joblink_href:1 }, { unique:true, dropDups:true } )
  
  
  

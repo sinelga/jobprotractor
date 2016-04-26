@@ -263,9 +263,7 @@ function startLoop() {
 	
 	browser.ignoreSynchronization = true;
 	browser.get('http://careers.stackoverflow.com/jobs?sort=p&pg='+page);
-	
-	
-	
+		
 };
 
 
