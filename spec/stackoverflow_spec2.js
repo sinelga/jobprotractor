@@ -5,6 +5,28 @@ require('dotenv').load();
 var MongoClient = require('mongodb').MongoClient, assert = require('assert');
 var url = 'mongodb://localhost:27017/remotejob';
 
+
+function make_simple_login() {
+	var login = process.env.login;
+	var pass = process.env.pass;
+	
+	browser.ignoreSynchronization = true;
+	browser.get('https://stackoverflow.com/users/login?ssrc=head&returnurl=http%3a%2f%2fstackoverflow.com%2fjobs');
+	browser.driver.sleep(1000);
+	element(by.id('email')).sendKeys(login)
+	element(by.id('password')).sendKeys(pass)
+	element(by.id('submit-button')).click().then(
+			function(result) {
+				browser.driver.sleep(5000);
+								
+			});
+//	browser.driver.sleep(2000);
+	
+};
+
+
+
+
 function make_login_by() {
 	var fblogin = process.env.fblogin;
 	var fbpass = process.env.fbpass;
@@ -187,7 +209,7 @@ function addExternalLinkDB(employer_name,employer_location,employer_joblink_href
 
 function get_all_job_links(page) {
 	browser.ignoreSynchronization = true;
-	browser.get('http://careers.stackoverflow.com/jobs?sort=p&pg=' + page);
+	browser.get('http://stackoverflow.com/jobs?sort=p&pg=' + page);
 
 	element.all(by.css('.listResults .-item')).then(function(alljobs) {
 				
@@ -340,7 +362,7 @@ function loop_joblinks(page,lastpos){
 	
 	for (var pos=0;pos < lastpos;pos++) {
 		
-		browser.get('http://careers.stackoverflow.com/jobs?sort=p&pg='+page);
+		browser.get('http://stackoverflow.com/jobs?sort=p&pg='+page);
 		
 		var alljobsloop = element.all(by.css('.listResults .-item'));
 				
@@ -407,20 +429,20 @@ function loop_joblinks(page,lastpos){
 				
 				console.log("Ok hits ",hits);
 				
-				element(by.css('.careers-btn')).isPresent().then(function(result) {
-					
-					if (result) {
-						console.log(" Ok.careers-btn");
-						
-						var submitButtton = element(by.css('.careers-btn'));
-						
-						elaboratelink(submitButtton); 
-						
-					} else {
-						
-						console.log(" NO .careers-btn");
-					}
-				});
+//				element(by.css('.careers-btn')).isPresent().then(function(result) {
+//					
+//					if (result) {
+//						console.log(" Ok.careers-btn");
+//						
+//						var submitButtton = element(by.css('.careers-btn'));
+//						
+//						elaboratelink(submitButtton); 
+//						
+//					} else {
+//						
+//						console.log(" NO .careers-btn");
+//					}
+//				});
 				
 			}
 												
@@ -454,13 +476,14 @@ describe('stackoverflow.com all jobs', function() {
 
 	it('make login by facebook', function() {
 
-		make_login_by();
+//		make_login_by();
+		make_simple_login();
 
 	});
 
 	it('get all job links', function(page) {
 		
-		get_all_job_links(12);
+		get_all_job_links(1);
 
 	});
 
