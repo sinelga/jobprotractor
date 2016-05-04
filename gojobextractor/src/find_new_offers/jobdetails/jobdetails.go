@@ -1,14 +1,16 @@
 package jobdetails
 
 import (
-	//	"domains"
-	"fmt"
+	"domains"
+	//	"fmt"
 	gm "github.com/onsi/gomega"
 	"github.com/sclevine/agouti"
 	am "github.com/sclevine/agouti/matchers"
+	"gopkg.in/mgo.v2"
+	"strings"
 	"time"
-	//	"strings"
-//	"find_new_offers/jobdetails/parseLink"
+	//	"find_new_offers/jobdetails/parseLink"
+	"dbhandler"
 )
 
 type JobOffer struct {
@@ -58,34 +60,77 @@ func (jo *JobOffer) GetAllLinks(page *agouti.Page) {
 
 	for i := 0; i < count_links; i++ {
 
-		alink, _ := alllinks.At(i).Attribute("href")
-
-		if alink != "" {
-//			fmt.Println(alink)
-//			parseLink.Parse(alllinks.At(i))
-			jo.ParceLink(alllinks.At(i))
-
-		}
-		//		ahtml, _ := alllinks.At(i).Text()
-		//
-		//		fmt.Println(alink)
-		//		fmt.Println(ahtml)
-		//
-		//		if strings.HasPrefix(alink, "mailto") {
-		//			fmt.Println("OK email:",alink)
-		//		}
+		jo.ParceLink(alllinks.At(i))
 
 	}
 
-	
 }
 
 func (jo *JobOffer) ParceLink(link *agouti.Selection) {
-	
-	fmt.Println(link.Attribute("href"))
-	hits :=jo.Hits
-	jo.Hits	= hits+1
-	
+
+	now := time.Now()
+	id, _ := link.Attribute("id")
+	//	data_jobid, _ := link.Attribute("data-jobid")
+	data_uri, _ := link.Attribute("data-uri")
+	href, _ := link.Attribute("href")
+
+	class, _ := link.Attribute("class")
+
+	text, _ := link.Text()
+
+	if class == "title job-link" {
+
+		jo.Id = href
+		jo.Created_at = now
+
+		if text != "" {
+			jo.Title = text
+		}
+
+	}
+
+	if class == "post-tag job-link no-tag-menu" {
+		if text != "" {
+			jo.Tags = append(jo.Tags, text)
+		}
+
+	}
+	if class == "employer" {
+		if text != "" {
+			jo.Company = text
+		}
+
+	}
+
+	if id == "apply" && data_uri != "" {
+		jo.Externallink = data_uri
+	}
+
+	if href != "" && text != "" {
+
+		if strings.HasPrefix(href, "mailto") {
+			jo.Email = text
+		}
+
+	}
+
 }
 
+func (jo *JobOffer) FindLocation(page *agouti.Page) {
+	gm.Expect(page.FindByClass("location")).Should(am.BeFound())
+	location_on_page := page.FirstByClass("location")
+//	fmt.Println(location_on_page.Text())
+	location,_ := location_on_page.Text()
+	if location !="" {
+		jo.Location=location
+	}
 
+}
+
+func (jo *JobOffer) ExamDbRecord(session mgo.Session) {
+
+	joboffers := domains.JobOffer{jo.Id, jo.Company, jo.Title, jo.Location, jo.Tags, jo.Externallink, jo.Email, jo.Hits, jo.Created_at, jo.Applied, jo.Description}
+
+	dbhandler.InsertRecord(session, joboffers)
+
+}

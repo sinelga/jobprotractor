@@ -9,8 +9,7 @@ type JobOffer struct {
 	Company string
 	Title string
 	Location string
-	Tags []string
-	Internallink string
+	Tags []string	
 	Externallink string
 	Email string
 	Hits int
