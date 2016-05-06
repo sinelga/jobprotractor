@@ -9,6 +9,7 @@ import (
 	"gopkg.in/mgo.v2"
 	"os"
 	"testing"
+	"apply_for_job/handle_internal_link"
 )
 
 var dbsession *mgo.Session
@@ -27,10 +28,13 @@ func TestApply(t *testing.T) {
 
 		email := os.Getenv("login")
 		pass := os.Getenv("pass")
+		fmt.Println(email,pass)
 		driver := agouti.ChromeDriver()
 		gm.Expect(driver.Start()).To(gm.Succeed())
 		page, err := driver.NewPage(agouti.Browser("chrome"))
 		gm.Expect(err).NotTo(gm.HaveOccurred())
+//		gm.Expect(page.Navigate("http://stackoverflow.com/jobs")).To(gm.Succeed())
+//		gm.Expect(page).To(am.HaveURL("http://stackoverflow.com/jobs"))
 		gm.Expect(page.Navigate("https://stackoverflow.com/users/login?ssrc=head&returnurl=http%3a%2f%2fstackoverflow.com%2fjobs")).To(gm.Succeed())
 		gm.Expect(page).To(am.HaveURL("https://stackoverflow.com/users/login?ssrc=head&returnurl=http%3a%2f%2fstackoverflow.com%2fjobs"))
 
@@ -41,18 +45,18 @@ func TestApply(t *testing.T) {
 		gm.Eventually(page.FindByID("submit-button")).Should(am.BeFound())
 		gm.Expect(page.FindByID("submit-button").Submit()).To(gm.Succeed())
 
-		//	for _, result := range results {
-		//		fmt.Println("result", result)
-		//	}
 
 		for i := 0; i < 1; i++ {
 			fmt.Println(results[i].Id)
 
 			gm.Expect(page.Navigate(results[i].Id)).To(gm.Succeed())
 			gm.Expect(page).To(am.HaveURL(results[i].Id))
+			
+			employer :=handle_internal_link.NewInternalJobOffers(results[i])
+			(*employer).Apply(page) 
 
 		}
-		gm.Expect(driver.Stop()).To(gm.Succeed())
+//		gm.Expect(driver.Stop()).To(gm.Succeed())
 	}
 
 }

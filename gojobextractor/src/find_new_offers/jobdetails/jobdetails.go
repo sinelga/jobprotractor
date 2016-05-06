@@ -19,7 +19,6 @@ type JobOffer struct {
 	Title        string
 	Location     string
 	Tags         []string
-	Internallink string
 	Externallink string
 	Email        string
 	Hits         int
@@ -32,12 +31,11 @@ func NewJobOffers() *JobOffer {
 
 	return &JobOffer{
 
-		Id:           "",
-		Company:      "",
-		Title:        "",
-		Location:     "",
-		Tags:         []string{},
-		Internallink: "",
+		Id:       "",
+		Company:  "",
+		Title:    "",
+		Location: "",
+		Tags:     []string{},
 		Externallink: "",
 		Email:        "",
 		Hits:         0,
@@ -119,10 +117,10 @@ func (jo *JobOffer) ParceLink(link *agouti.Selection) {
 func (jo *JobOffer) FindLocation(page *agouti.Page) {
 	gm.Expect(page.FindByClass("location")).Should(am.BeFound())
 	location_on_page := page.FirstByClass("location")
-//	fmt.Println(location_on_page.Text())
-	location,_ := location_on_page.Text()
-	if location !="" {
-		jo.Location=location
+	//	fmt.Println(location_on_page.Text())
+	location, _ := location_on_page.Text()
+	if location != "" {
+		jo.Location = location
 	}
 
 }
