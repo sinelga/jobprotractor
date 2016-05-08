@@ -31,11 +31,11 @@ func NewJobOffers() *JobOffer {
 
 	return &JobOffer{
 
-		Id:       "",
-		Company:  "",
-		Title:    "",
-		Location: "",
-		Tags:     []string{},
+		Id:           "",
+		Company:      "",
+		Title:        "",
+		Location:     "",
+		Tags:         []string{},
 		Externallink: "",
 		Email:        "",
 		Hits:         0,
@@ -71,6 +71,7 @@ func (jo *JobOffer) ParceLink(link *agouti.Selection) {
 	//	data_jobid, _ := link.Attribute("data-jobid")
 	data_uri, _ := link.Attribute("data-uri")
 	href, _ := link.Attribute("href")
+	data_email, _ := link.Attribute("data-email")
 
 	class, _ := link.Attribute("class")
 
@@ -102,6 +103,12 @@ func (jo *JobOffer) ParceLink(link *agouti.Selection) {
 
 	if id == "apply" && data_uri != "" {
 		jo.Externallink = data_uri
+	}
+
+	if id == "apply" && data_email != "" {
+
+		jo.Externallink = data_email
+
 	}
 
 	if href != "" && text != "" {
