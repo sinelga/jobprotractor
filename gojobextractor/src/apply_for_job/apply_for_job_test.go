@@ -33,8 +33,6 @@ func TestApply(t *testing.T) {
 		gm.Expect(driver.Start()).To(gm.Succeed())
 		page, err := driver.NewPage(agouti.Browser("chrome"))
 		gm.Expect(err).NotTo(gm.HaveOccurred())
-//		gm.Expect(page.Navigate("http://stackoverflow.com/jobs")).To(gm.Succeed())
-//		gm.Expect(page).To(am.HaveURL("http://stackoverflow.com/jobs"))
 		gm.Expect(page.Navigate("https://stackoverflow.com/users/login?ssrc=head&returnurl=http%3a%2f%2fstackoverflow.com%2fjobs")).To(gm.Succeed())
 		gm.Expect(page).To(am.HaveURL("https://stackoverflow.com/users/login?ssrc=head&returnurl=http%3a%2f%2fstackoverflow.com%2fjobs"))
 
@@ -46,14 +44,14 @@ func TestApply(t *testing.T) {
 		gm.Expect(page.FindByID("submit-button").Submit()).To(gm.Succeed())
 
 
-		for i := 0; i < 1; i++ {
+		for i := 0; i < len(results); i++ {
 			fmt.Println(results[i].Id)
 
 			gm.Expect(page.Navigate(results[i].Id)).To(gm.Succeed())
 			gm.Expect(page).To(am.HaveURL(results[i].Id))
 			
 			employer :=handle_internal_link.NewInternalJobOffers(results[i])
-			(*employer).Apply(page) 
+			(*employer).Apply(*dbsession,page) 
 
 		}
 //		gm.Expect(driver.Stop()).To(gm.Succeed())

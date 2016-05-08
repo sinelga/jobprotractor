@@ -4,6 +4,13 @@ import (
 	"time"
 )
 
+type Tags struct {
+	
+	Tag string
+	Duration string
+	
+}
+
 type JobOffer struct {
 	Id string
 	Company string
