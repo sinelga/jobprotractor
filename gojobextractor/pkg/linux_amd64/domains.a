@@ -1,0 +1,97 @@
+!<arch>
+__.PKGDEF       0           0     0     644     9100      `
+go object linux amd64 go1.6.2 X:none
+build id "4442407ca7de99dfe8ce83ecfd8603c26aa29039"
+
+$$
+package domains
+	import time "time"
+	type @"".Tags struct { Tag string; Duration string }
+	type @"time".zone struct { @"time".name string; @"time".offset int; @"time".isDST bool }
+	type @"time".zoneTrans struct { @"time".when int64; @"time".index uint8; @"time".isstd bool; @"time".isutc bool }
+	type @"time".Location struct { @"time".name string; @"time".zone []@"time".zone; @"time".tx []@"time".zoneTrans; @"time".cacheStart int64; @"time".cacheEnd int64; @"time".cacheZone *@"time".zone }
+	func (@"time".lÂ·2 *@"time".Location "esc:0x22") String () (? string)
+	func (@"time".lÂ·2 *@"time".Location "esc:0x1") @"time".firstZoneUsed () (? bool)
+	func (@"time".lÂ·2 *@"time".Location "esc:0x12") @"time".get () (? *@"time".Location)
+	func (@"time".lÂ·6 *@"time".Location "esc:0x32") @"time".lookup (@"time".secÂ·7 int64) (@"time".nameÂ·1 string, @"time".offsetÂ·2 int, @"time".isDSTÂ·3 bool, @"time".startÂ·4 int64, @"time".endÂ·5 int64)
+	func (@"time".lÂ·2 *@"time".Location "esc:0x1") @"time".lookupFirstZone () (? int)
+	func (@"time".lÂ·4 *@"time".Location "esc:0x1") @"time".lookupName (@"time".nameÂ·5 string "esc:0x1", @"time".unixÂ·6 int64) (@"time".offsetÂ·1 int, @"time".isDSTÂ·2 bool, @"time".okÂ·3 bool)
+	type @"time".Duration int64
+	func (@"time".dÂ·2 @"time".Duration) Hours () (? float64) { var @"time".hourÂ·3 @"time".Duration; ; @"time".hourÂ·3 = @"time".dÂ·2 / @"time".Duration(0x34630b8a000); var @"time".nsecÂ·4 @"time".Duration; ; @"time".nsecÂ·4 = @"time".dÂ·2 % @"time".Duration(0x34630b8a000); return float64(@"time".hourÂ·3) + float64(@"time".nsecÂ·4) * float64(8190022623310637111963488201822504381538623676021880892417778544696899264837610290203272971060556344039023584360473938041055625214280336402169897364226048p-553) }
+	func (@"time".dÂ·2 @"time".Duration) Minutes () (? float64) { var @"time".minÂ·3 @"time".Duration; ; @"time".minÂ·3 = @"time".dÂ·2 / @"time".Duration(0xdf8475800); var @"time".nsecÂ·4 @"time".Duration; ; @"time".nsecÂ·4 = @"time".dÂ·2 % @"time".Duration(0xdf8475800); return float64(@"time".minÂ·3) + float64(@"time".nsecÂ·4) * float64(7678146209353722106395056769533233877065564876941352542109479049699919628723768656821910653339403201031675627614471533358284117434246264392176261853609984p-547) }
+	func (@"time".dÂ·2 @"time".Duration) Nanoseconds () (? int64) { return int64(@"time".dÂ·2) }
+	func (@"time".dÂ·2 @"time".Duration) Seconds () (? float64) { var @"time".secÂ·3 @"time".Duration; ; @"time".secÂ·3 = @"time".dÂ·2 / @"time".Duration(0x3b9aca00); var @"time".nsecÂ·4 @"time".Duration; ; @"time".nsecÂ·4 = @"time".dÂ·2 % @"time".Duration(0x3b9aca00); return float64(@"time".secÂ·3) + float64(@"time".nsecÂ·4) * float64(7198262071269114660816079141112770740375861891461678802759824945047098083990024106014198994535558872472104883612039846078596891298747423852523262413111296p-541) }
+	func (@"time".dÂ·2 @"time".Duration) String () (? string)
+	type @"time".Month int
+	func (@"time".mÂ·2 @"time".Month) String () (? string) { return @"time".months[@"time".mÂ·2 - @"time".Month(0x1)] }
+	type @"time".Weekday int
+	func (@"time".dÂ·2 @"time".Weekday) String () (? string) { return @"time".days[@"time".dÂ·2] }
+	type @"time".Time struct { @"time".sec int64; @"time".nsec int32; @"time".loc *@"time".Location }
+	func (@"time".tÂ·2 @"time".Time "esc:0x12") Add (@"time".dÂ·3 @"time".Duration) (? @"time".Time) { @"time".tÂ·2.@"time".sec += int64(@"time".dÂ·3 / @"time".Duration(0x3b9aca00)); var @"time".nsecÂ·4 int32; ; @"time".nsecÂ·4 = int32(@"time".tÂ·2.@"time".nsec) + int32(@"time".dÂ·3 % @"time".Duration(0x3b9aca00)); if @"time".nsecÂ·4 >= int32(0x3b9aca00) { @"time".tÂ·2.@"time".sec++; @"time".nsecÂ·4 -= int32(0x3b9aca00) } else { if @"time".nsecÂ·4 < int32(0x0) { @"time".tÂ·2.@"time".sec--; @"time".nsecÂ·4 += int32(0x3b9aca00) } }; @"time".tÂ·2.@"time".nsec = @"time".nsecÂ·4; return @"time".tÂ·2 }
+	func (@"time".tÂ·2 @"time".Time "esc:0x12") AddDate (@"time".yearsÂ·3 int, @"time".monthsÂ·4 int, @"time".daysÂ·5 int) (? @"time".Time)
+	func (@"time".tÂ·2 @"time".Time "esc:0x1") After (@"time".uÂ·3 @"time".Time "esc:0x1") (? bool) { return @"time".tÂ·2.@"time".sec > @"time".uÂ·3.@"time".sec || @"time".tÂ·2.@"time".sec == @"time".uÂ·3.@"time".sec && @"time".tÂ·2.@"time".nsec > @"time".uÂ·3.@"time".nsec }
+	func (@"time".tÂ·2 @"time".Time "esc:0x9") AppendFormat (@"time".bÂ·3 []byte "esc:0x1a", @"time".layoutÂ·4 string "esc:0x9") (? []byte)
+	func (@"time".tÂ·2 @"time".Time "esc:0x1") Before (@"time".uÂ·3 @"time".Time "esc:0x1") (? bool) { return @"time".tÂ·2.@"time".sec < @"time".uÂ·3.@"time".sec || @"time".tÂ·2.@"time".sec == @"time".uÂ·3.@"time".sec && @"time".tÂ·2.@"time".nsec < @"time".uÂ·3.@"time".nsec }
+	func (@"time".tÂ·4 @"time".Time "esc:0x1") Clock () (@"time".hourÂ·1 int, @"time".minÂ·2 int, @"time".secÂ·3 int)
+	func (@"time".tÂ·4 @"time".Time "esc:0x1") Date () (@"time".yearÂ·1 int, @"time".monthÂ·2 @"time".Month, @"time".dayÂ·3 int)
+	func (@"time".tÂ·2 @"time".Time "esc:0x1") Day () (? int)
+	func (@"time".tÂ·2 @"time".Time "esc:0x1") Equal (@"time".uÂ·3 @"time".Time "esc:0x1") (? bool) { return @"time".tÂ·2.@"time".sec == @"time".uÂ·3.@"time".sec && @"time".tÂ·2.@"time".nsec == @"time".uÂ·3.@"time".nsec }
+	func (@"time".tÂ·2 @"time".Time "esc:0x9") Format (@"time".layoutÂ·3 string "esc:0x9") (? string)
+	func (@"time".tÂ·2 *@"time".Time "esc:0x1") GobDecode (@"time".dataÂ·3 []byte "esc:0x1") (? error)
+	func (@"time".tÂ·3 @"time".Time "esc:0x1") GobEncode () (? []byte, ? error)
+	func (@"time".tÂ·2 @"time".Time "esc:0x1") Hour () (? int)
+	func (@"time".tÂ·3 @"time".Time "esc:0x1") ISOWeek () (@"time".yearÂ·1 int, @"time".weekÂ·2 int)
+	func (@"time".tÂ·2 @"time".Time "esc:0x12") In (@"time".locÂ·3 *@"time".Location "esc:0x12") (? @"time".Time)
+	func (@"time".tÂ·2 @"time".Time "esc:0x1") IsZero () (? bool) { return @"time".tÂ·2.@"time".sec == int64(0x0) && @"time".tÂ·2.@"time".nsec == int32(0x0) }
+	func (@"time".tÂ·2 @"time".Time "esc:0x12") Local () (? @"time".Time) { @"time".tÂ·2.@"time".loc = @"time".Local; return @"time".tÂ·2 }
+	func (@"time".tÂ·2 @"time".Time "esc:0x12") Location () (? *@"time".Location) { var @"time".lÂ·3 *@"time".Location; ; @"time".lÂ·3 = @"time".tÂ·2.@"time".loc; if @"time".lÂ·3 == nil { @"time".lÂ·3 = @"time".UTC }; return @"time".lÂ·3 }
+	func (@"time".tÂ·3 @"time".Time "esc:0x1") MarshalBinary () (? []byte, ? error)
+	func (@"time".tÂ·3 @"time".Time "esc:0x9") MarshalJSON () (? []byte, ? error)
+	func (@"time".tÂ·3 @"time".Time "esc:0x9") MarshalText () (? []byte, ? error)
+	func (@"time".tÂ·2 @"time".Time "esc:0x1") Minute () (? int)
+	func (@"time".tÂ·2 @"time".Time "esc:0x1") Month () (? @"time".Month)
+	func (@"time".tÂ·2 @"time".Time "esc:0x1") Nanosecond () (? int) { return int(@"time".tÂ·2.@"time".nsec) }
+	func (@"time".tÂ·2 @"time".Time "esc:0x12") Round (@"time".dÂ·3 @"time".Duration) (? @"time".Time)
+	func (@"time".tÂ·2 @"time".Time "esc:0x1") Second () (? int)
+	func (@"time".tÂ·2 @"time".Time "esc:0x9") String () (? string)
+	func (@"time".tÂ·2 @"time".Time "esc:0x1") Sub (@"time".uÂ·3 @"time".Time "esc:0x1") (? @"time".Duration)
+	func (@"time".tÂ·2 @"time".Time "esc:0x12") Truncate (@"time".dÂ·3 @"time".Duration) (? @"time".Time)
+	func (@"time".tÂ·2 @"time".Time "esc:0x12") UTC () (? @"time".Time) { @"time".tÂ·2.@"time".loc = @"time".UTC; return @"time".tÂ·2 }
+	func (@"time".tÂ·2 @"time".Time "esc:0x1") Unix () (? int64) { return @"time".tÂ·2.@"time".sec + int64(-0xe7791f700) }
+	func (@"time".tÂ·2 @"time".Time "esc:0x1") UnixNano () (? int64) { return (@"time".tÂ·2.@"time".sec + int64(-0xe7791f700)) * int64(0x3b9aca00) + int64(@"time".tÂ·2.@"time".nsec) }
+	func (@"time".tÂ·2 *@"time".Time "esc:0x1") UnmarshalBinary (@"time".dataÂ·3 []byte "esc:0x1") (? error)
+	func (@"time".tÂ·2 *@"time".Time "esc:0x1") UnmarshalJSON (@"time".dataÂ·3 []byte "esc:0x1") (@"time".errÂ·1 error)
+	func (@"time".tÂ·2 *@"time".Time "esc:0x1") UnmarshalText (@"time".dataÂ·3 []byte "esc:0x1") (@"time".errÂ·1 error)
+	func (@"time".tÂ·2 @"time".Time "esc:0x1") Weekday () (? @"time".Weekday)
+	func (@"time".tÂ·2 @"time".Time "esc:0x1") Year () (? int)
+	func (@"time".tÂ·2 @"time".Time "esc:0x1") YearDay () (? int)
+	func (@"time".tÂ·3 @"time".Time "esc:0x32") Zone () (@"time".nameÂ·1 string, @"time".offsetÂ·2 int)
+	func (@"time".tÂ·2 @"time".Time "esc:0x1") @"time".abs () (? uint64)
+	func (@"time".tÂ·5 @"time".Time "esc:0x1") @"time".date (@"time".fullÂ·6 bool) (@"time".yearÂ·1 int, @"time".monthÂ·2 @"time".Month, @"time".dayÂ·3 int, @"time".ydayÂ·4 int)
+	func (@"time".tÂ·4 @"time".Time "esc:0x32") @"time".locabs () (@"time".nameÂ·1 string, @"time".offsetÂ·2 int, @"time".absÂ·3 uint64)
+	type @"".JobOffer struct { Id string; Company string; Title string; Location string; Tags []string; Externallink string; Email string; Hits int; Created_at @"time".Time; Applied bool; Description string }
+	func @"".init ()
+	var @"time".months [12]string
+	var @"time".days [7]string
+	var @"time".Local *@"time".Location
+	var @"time".UTC *@"time".Location
+
+$$
+_go_.o          0           0     0     644     8358      `
+go object linux amd64 go1.6.2 X:none
+
+!
+  go13ldtime.a ş"".init      dH‹%    H;av2Š    €û tŠ    €ûuÃè    Æ    è    Æ    Ãè    ë¸ÌÌÌÌÌÌÌÌ
+      "  "".initdoneÂ·   8  "".initdoneÂ·   N  "runtime.throwinit   ^ "".initdoneÂ·   j  time.init   v "".initdoneÂ·   „  0runtime.morestack_noctxt        P P 8P 
+ &* TgclocalsÂ·33cdeccccebe80329f1fdbee7f5874cb TgclocalsÂ·33cdeccccebe80329f1fdbee7f5874cb   „/home/juno/git/jobprotractor/gojobextractor/src/domains/domains.goş$type..hash."".Tags à  àdH‹%    H;a†…   HƒìHÇD$0    H‹\$ H‰$Hƒ<$ t_H‹\$(H‰\$è    H‹\$H‰\$(H‹\$ H‰$Hƒ<$ t-Hƒ$H‹\$(H‰\$è    H‹\$H‰\$(H‹\$(H‰\$0HƒÄÃ‰%    ëÊ‰%    ë˜è    é^ÿÿÿÌÌÌÌÌÌÌÌÌÌÌÌÌÌ
+      v  runtime.strhash   Ò  runtime.strhash   ²  0runtime.morestack_noctxt   00  "".~r2  type.uintptr "".h type.uintptr "".p  type.*"".Tags 0n/0/ ° ° 
+ :v TgclocalsÂ·0b86ef39f3fed835f14ba5f4d7c62fa2 TgclocalsÂ·33cdeccccebe80329f1fdbee7f5874cb   „/home/juno/git/jobprotractor/gojobextractor/src/domains/domains.goş type..eq."".Tags €  €dH‹%    H;a†Z  HƒìhÆ„$€    H‹\$pHƒû „8  H‹+H‰l$XH‹kH‰l$`H‹\$xHƒû „  H‹+H‰l$HH‹kH‰l$PH‹\$`H‹l$PH9ë…à   H‹l$XH‰,$H‹l$`H‰l$H‹l$HH‰l$H‹l$PH‰l$è    Š\$ €û „§   H‹\$pHƒû „‘   H‹kH‰l$8H‹kH‰l$@H‹\$xHƒû tpH‹kH‰l$(H‹kH‰l$0H‹\$@H‹l$0H9ëuBH‹l$8H‰,$H‹l$@H‰l$H‹l$(H‰l$H‹l$0H‰l$è    Š\$ €û tÆ„$€   HƒÄhÃÆ„$€    HƒÄhÃ‰ëŒ‰éhÿÿÿÆ„$€    HƒÄhÃ‰éèşÿÿ‰éÁşÿÿè    é‰şÿÿÌÌÌÌÌÌÌÌÌ
+      ´   runtime.eqstring   À   runtime.eqstring   Ü  0runtime.morestack_noctxt   0Ğ  "".autotmp_0003 type.string "".autotmp_0002 _type.string "".autotmp_0001 ?type.string "".autotmp_0000 type.string "".~r2  type.bool "".q type.*"".Tags "".p  type.*"".Tags 8Ğ¢ÏĞÏĞÏĞÏ € €  ™ç TgclocalsÂ·3bb21ca8fe1d99a3e492463bd711418a TgclocalsÂ·895d0569a38a56443b84805daa09d838   „/home/juno/git/jobprotractor/gojobextractor/src/domains/domains.goşTgclocalsÂ·33cdeccccebe80329f1fdbee7f5874cb           şTgclocalsÂ·33cdeccccebe80329f1fdbee7f5874cb           ş>"".initdoneÂ·  type.uint8   ş"".initÂ·f              "".init   şTgclocalsÂ·33cdeccccebe80329f1fdbee7f5874cb           şTgclocalsÂ·0b86ef39f3fed835f14ba5f4d7c62fa2             şTgclocalsÂ·895d0569a38a56443b84805daa09d838              şTgclocalsÂ·3bb21ca8fe1d99a3e492463bd711418a             ş,type..hashfunc."".Tags              $type..hash."".Tags   ş(type..eqfunc."".Tags               type..eq."".Tags   ş"type..alg."".Tags                        ,type..hashfunc."".Tags     (type..eqfunc."".Tags   ş"runtime.gcbits.01    ş:go.string.hdr."*domains.Tags"                       2go.string."*domains.Tags"   ş2go.string."*domains.Tags"    *domains.Tags  ştype.*"".Tags                  9F  6                                                
+0   runtime.algarray   @  "runtime.gcbits.01   P  :go.string.hdr."*domains.Tags"   p  ,go.weak.type.**"".Tags   €  type."".Tags   ş"runtime.gcbits.05    ş8go.string.hdr."domains.Tags"                       0go.string."domains.Tags"   ş0go.string."domains.Tags"    domains.Tags  ş&go.string.hdr."Tag"                       go.string."Tag"   şgo.string."Tag"   Tag  ş0go.string.hdr."Duration"                       (go.string."Duration"   ş(go.string."Duration"    Duration  ş(go.string.hdr."Tags"                        go.string."Tags"   ş go.string."Tags"   
+Tags  ş.go.string.hdr."domains"                       &go.string."domains"   ş&go.string."domains"   domains  ş"go.importpath."".                       &go.string."domains"   ştype."".Tags                     ¬N/                                                                                                                                                                                      0  "type..alg."".Tags   @  "runtime.gcbits.05   P  8go.string.hdr."domains.Tags"   p  type.*"".Tags   €° type."".Tags   °  &go.string.hdr."Tag"   Ğ  type.string   €  0go.string.hdr."Duration"      type.string   `Ğ type."".Tags   Ğ  (go.string.hdr."Tags"   à  "go.importpath."".   ğ  type."".Tags   ş0go.string.hdr."[]string"                       (go.string."[]string"   ş(go.string."[]string"    []string  ştype.[]string                 Ó¨ó
+                                                 
+0   runtime.algarray   @  "runtime.gcbits.01   P  0go.string.hdr."[]string"   p  ,go.weak.type.*[]string   €  type.string   ş:go.typelink.[]string	[]string              type.[]string   şBgo.string.hdr."*domains.JobOffer"                       :go.string."*domains.JobOffer"   ş:go.string."*domains.JobOffer" 0  $*domains.JobOffer  ş"type.*"".JobOffer                  3´"³ 6                                                
+0   runtime.algarray   @  "runtime.gcbits.01   P  Bgo.string.hdr."*domains.JobOffer"   p  4go.weak.type.**"".JobOffer   €   type."".JobOffer   ş*runtime.gcbits.552914   U) ş@go.string.hdr."domains.JobOffer"                       8go.string."domains.JobOffer"   ş8go.string."domains.JobOffer" 0  "domains.JobOffer  ş$go.string.hdr."Id"                       go.string."Id"   şgo.string."Id"   Id  ş.go.string.hdr."Company"                       &go.string."Company"   ş&go.string."Company"   Company  ş*go.string.hdr."Title"                       "go.string."Title"   ş"go.string."Title"   Title  ş0go.string.hdr."Location"                       (go.string."Location"   ş(go.string."Location"    Location  ş8go.string.hdr."Externallink"                       0go.string."Externallink"   ş0go.string."Externallink"    Externallink  ş*go.string.hdr."Email"                       "go.string."Email"   ş"go.string."Email"   Email  ş(go.string.hdr."Hits"                        go.string."Hits"   ş go.string."Hits"   
+Hits  ş4go.string.hdr."Created_at"             
+          ,go.string."Created_at"   ş,go.string."Created_at"    Created_at  ş.go.string.hdr."Applied"                       &go.string."Applied"   ş&go.string."Applied"   Applied  ş6go.string.hdr."Description"                       .go.string."Description"   ş.go.string."Description"    Description  ş0go.string.hdr."JobOffer"                       (go.string."JobOffer"   ş(go.string."JobOffer"    JobOffer  ş type."".JobOffer  ğ  ğ°       ¨       Ë	äA                                                                                                                                                                                                                      0                                       @                                       X                                       h                                       x                                       €                                       ˜                                                                                       >0à  runtime.algarray   @  *runtime.gcbits.552914   P  @go.string.hdr."domains.JobOffer"   p  "type.*"".JobOffer   €°  type."".JobOffer   °  $go.string.hdr."Id"   Ğ  type.string   €  .go.string.hdr."Company"      type.string   Ğ  *go.string.hdr."Title"   ğ  type.string      0go.string.hdr."Location"   À  type.string   ğ  (go.string.hdr."Tags"     type.[]string   À  8go.string.hdr."Externallink"   à  type.string     *go.string.hdr."Email"   °  type.string   à  (go.string.hdr."Hits"   €  type.int   °  4go.string.hdr."Created_at"   Ğ  type.time.Time   €  .go.string.hdr."Applied"      type.bool   Ğ  6go.string.hdr."Description"   ğ  type.string   `   type."".JobOffer      0go.string.hdr."JobOffer"   °  "go.importpath."".   Àğ  type."".JobOffer   ş(go.string.hdr."time"                        go.string."time"   ş go.string."time"   
+time  ş&go.importpath.time.                        go.string."time"   ş*type..hash."".TagsÂ·f              $type..hash."".Tags   ş&type..eq."".TagsÂ·f               type..eq."".Tags   ÿÿgo13ld

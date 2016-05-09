@@ -29,6 +29,7 @@ type InternalJobOffer struct {
 }
 
 func NewInternalJobOffers(job domains.JobOffer) *InternalJobOffer {
+//func NewInternalJobOffers() *InternalJobOffer {
 
 	return &InternalJobOffer{
 
@@ -43,6 +44,7 @@ func NewInternalJobOffers(job domains.JobOffer) *InternalJobOffer {
 		Created_at:   job.Created_at,
 		Applied:      job.Applied,
 		Description:  job.Description,
+
 	}
 
 }
@@ -152,7 +154,7 @@ func (jo *InternalJobOffer) ElaborateFrame(dbsession mgo.Session, page *agouti.P
 	gm.Expect(allinputs.At(idtoinput).UploadFile("/home/juno/git/cv/version_desk_react_00/dist/mazurov_cv.pdf")).To(gm.Succeed())
 
 	mytagstoinsert := mytags.GetMyTags("/home/juno/git/jobprotractor/gojobextractor/mytags.csv", jo.Tags)
-//	fmt.Println(mytagstoinsert)
+	fmt.Println(mytagstoinsert)
 	coverlettertxt := coverletter.Create(mytagstoinsert, "/home/juno/git/jobprotractor/gojobextractor/coverletter.csv")
 
 	gm.Expect(form.FindByID("CoverLetter")).Should(am.BeFound())
@@ -161,7 +163,6 @@ func (jo *InternalJobOffer) ElaborateFrame(dbsession mgo.Session, page *agouti.P
 	gm.Expect(allinputs.At(idbuttonsubmit).Submit()).To(gm.Succeed())
 	gm.Expect(page.ConfirmPopup()).To(gm.Succeed())
 	
-
 	jo.Applied = true
 
 	jo.UpdateApplyedEmployer(dbsession)

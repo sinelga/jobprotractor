@@ -8,6 +8,21 @@ import (
 	"log"
 )
 
+func GetAllEmployers(dbsession mgo.Session) []domains.JobOffer {
+
+	dbsession.SetMode(mgo.Monotonic, true)
+
+	c := dbsession.DB("cv_employers").C("employers")
+	var results []domains.JobOffer
+	err := c.Find(nil).All(&results)
+	if err != nil {
+
+		log.Fatal(err)
+	}
+
+	return results
+}
+
 func InsertRecord(dbsession mgo.Session, joboffer domains.JobOffer) {
 
 	dbsession.SetMode(mgo.Monotonic, true)
@@ -19,7 +34,7 @@ func InsertRecord(dbsession mgo.Session, joboffer domains.JobOffer) {
 
 		log.Fatal(err)
 	}
-//	fmt.Println("count", count)
+	//	fmt.Println("count", count)
 
 	if count == 0 {
 
@@ -53,7 +68,7 @@ func FindNotApplyedEmployers(dbsession mgo.Session) []domains.JobOffer {
 
 func UpdateEmployer(dbsession mgo.Session, joboffer domains.JobOffer) {
 
-//	fmt.Println(joboffer)
+	//	fmt.Println(joboffer)
 
 	dbsession.SetMode(mgo.Monotonic, true)
 

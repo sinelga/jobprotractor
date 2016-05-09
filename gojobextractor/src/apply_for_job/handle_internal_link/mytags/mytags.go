@@ -7,9 +7,11 @@ import (
 	"domains"
 )
 
-var mystagstoret []domains.Tags
 
 func GetMyTags(tagscsv string,employertags []string) []domains.Tags {
+	
+	var mystagstoret []domains.Tags
+	
 	csvfile, err := os.Open(tagscsv)
 	if err != nil {
 		fmt.Println(err)
@@ -18,7 +20,9 @@ func GetMyTags(tagscsv string,employertags []string) []domains.Tags {
 	reader.LazyQuotes = true
 
 	records, err := reader.ReadAll()
-
+	if err != nil {
+		fmt.Println(err)
+	}
 	m := make(map[string]string)
 
 	for _,record := range records {
