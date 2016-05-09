@@ -37,13 +37,8 @@ func GetMyTags(tagscsv string,employertags []string) []domains.Tags {
 			
 			mystagstoret =append(mystagstoret,toappend)			
 			
-		}
-		
-		
+		}		
 	}
-	
-	
-	
-
+		
 	return mystagstoret
 }
