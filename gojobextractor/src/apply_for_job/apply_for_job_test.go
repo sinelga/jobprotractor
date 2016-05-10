@@ -55,7 +55,7 @@ func TestApply(t *testing.T) {
 			(*employer).Apply(*dbsession, page)
 
 		}
-		//		gm.Expect(driver.Stop()).To(gm.Succeed())
+		gm.Expect(driver.Stop()).To(gm.Succeed())
 	}
 
 }

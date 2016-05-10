@@ -14,7 +14,6 @@ func FindAllOnPage(page agouti.Page) *agouti.MultiSelection {
 	items := listResults.At(1).AllByClass("-item")
 	gm.Expect(items.Count()).Should(gm.Equal(25))
 
-
 	return items
 
 }

@@ -8,6 +8,22 @@ import (
 	"log"
 )
 
+func ExternalEmploers(dbsession mgo.Session) []domains.JobOffer {
+
+	dbsession.SetMode(mgo.Monotonic, true)
+
+	c := dbsession.DB("cv_employers").C("employers")
+
+	var results []domains.JobOffer
+	err := c.Find(bson.M{"externallink": bson.M{"$ne": ""},"location":bson.RegEx{Pattern: "Finland", Options: "i"}}).All(&results)
+
+	if err != nil {
+
+		log.Fatal(err)
+	}
+	return results
+}
+
 func GetAllEmployers(dbsession mgo.Session) []domains.JobOffer {
 
 	dbsession.SetMode(mgo.Monotonic, true)
@@ -67,8 +83,6 @@ func FindNotApplyedEmployers(dbsession mgo.Session) []domains.JobOffer {
 }
 
 func UpdateEmployer(dbsession mgo.Session, joboffer domains.JobOffer) {
-
-	//	fmt.Println(joboffer)
 
 	dbsession.SetMode(mgo.Monotonic, true)
 

@@ -26,14 +26,16 @@ func main() {
 		panic(err)
 	}
 	defer dbsession.Close()
-	csvfile, err := os.Open("/home/juno/git/jobprotractor/gojobextractor/mytags.csv")
-	if err != nil {
-		fmt.Println(err)
-	}
-	reader := csv.NewReader(csvfile)
-	reader.LazyQuotes = true
 
-	records, err := reader.ReadAll()
+	//	csvfile, err := os.Open("/home/juno/git/jobprotractor/gojobextractor/mytags.csv")
+	//	if err != nil {
+	//		fmt.Println(err)
+	//	}
+	//	reader := csv.NewReader(csvfile)
+	//	reader.LazyQuotes = true
+	//
+	//	records, err := reader.ReadAll()
+	records := FromCSV("/home/juno/git/jobprotractor/gojobextractor/mytags.csv")
 
 	mytags := make(map[string]struct{})
 
@@ -42,21 +44,27 @@ func main() {
 		mytags[record[0]] = struct{}{}
 
 	}
-	//	fmt.Println(mytags)
+
+	notmytagrecords := FromCSV("/home/juno/git/jobprotractor/gojobextractor/notmytags.csv")
+
+	notmytags := make(map[string]struct{})
+
+	for _, record := range notmytagrecords {
+
+		notmytags[record[0]] = struct{}{}
+
+	}
+
 	var keys []string
 	for k := range mytags {
 		keys = append(keys, k)
 	}
-//	sort.Strings(keys)
-//	fmt.Println(keys)
 
 	employers := dbhandler.GetAllEmployers(*dbsession)
 
 	employerstags := make(map[string]struct{})
 
 	for _, employer := range employers {
-
-//		fmt.Println(employer.Tags)
 
 		for _, tag := range employer.Tags {
 
@@ -72,16 +80,42 @@ func main() {
 		_, ok := mytags[k]
 		if !ok {
 
-			newtags = append(newtags,k)
+			newtags = append(newtags, k)
 
 		}
 	}
-	
+
 	sort.Strings(newtags)
-	
-	for _,newtag := range newtags {
-		fmt.Println(newtag)
+
+	for _, newtag := range newtags {
+//		fmt.Println(newtag)
+
+		_, ok := notmytags[newtag]
+
+		if !ok {
+
+			fmt.Println(newtag)	
+			//			newtags = append(newtags, k)
+
+		}
+
 	}
-	
+
+}
+
+func FromCSV(file string) [][]string {
+	csvfile, err := os.Open(file)
+	if err != nil {
+		fmt.Println(err)
+	}
+	reader := csv.NewReader(csvfile)
+	reader.LazyQuotes = true
+
+	records, err := reader.ReadAll()
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	return records
 
 }

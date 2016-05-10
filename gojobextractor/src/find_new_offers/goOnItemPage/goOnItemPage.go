@@ -16,5 +16,4 @@ func GoOn(item *agouti.Selection) {
 
 	gm.Expect(job_link.Click()).Should(gm.Succeed())
 
-
 }

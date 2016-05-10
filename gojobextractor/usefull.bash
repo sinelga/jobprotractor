@@ -15,5 +15,6 @@ db.getCollection('employers').find({"created_at" : { $gte : new ISODate("2016-05
 db.getCollection('employers').find({"created_at" : { $gte : new ISODate("2016-05-08T00:00:00Z") },"externallink":""})
 db.getCollection('employers').find({"created_at" : { $gte : new ISODate("2016-05-08T00:00:00Z") },"externallink":/mailto/})
 db.getCollection('employers').find({"created_at" : { $gte : new ISODate("2016-05-08T00:00:00Z") },"location":/Finland/})
+db.getCollection('employers').find({"externallink":{$ne:""},"location":/Finland/})
 
 

@@ -9,7 +9,6 @@ import (
 	"gopkg.in/mgo.v2"
 	"strings"
 	"time"
-	//	"find_new_offers/jobdetails/parseLink"
 	"dbhandler"
 )
 
@@ -68,7 +67,6 @@ func (jo *JobOffer) ParceLink(link *agouti.Selection) {
 
 	now := time.Now()
 	id, _ := link.Attribute("id")
-	//	data_jobid, _ := link.Attribute("data-jobid")
 	data_uri, _ := link.Attribute("data-uri")
 	href, _ := link.Attribute("href")
 	data_email, _ := link.Attribute("data-email")
@@ -124,7 +122,7 @@ func (jo *JobOffer) ParceLink(link *agouti.Selection) {
 func (jo *JobOffer) FindLocation(page *agouti.Page) {
 	gm.Expect(page.FindByClass("location")).Should(am.BeFound())
 	location_on_page := page.FirstByClass("location")
-	//	fmt.Println(location_on_page.Text())
+	
 	location, _ := location_on_page.Text()
 	if location != "" {
 		jo.Location = location
