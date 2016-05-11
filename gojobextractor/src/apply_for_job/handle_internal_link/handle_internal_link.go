@@ -114,8 +114,7 @@ func (jo *InternalJobOffer) ElaborateFrame(dbsession mgo.Session, page *agouti.P
 	form := page.FindByID("apply-dialog")
 
 	time.Sleep(1000 * time.Millisecond)
-	gm.Expect(form.FindByClass("apply-form")).Should(am.BeFound())
-	//	fmt.Println(form.FindByClass("apply-form"))
+	gm.Expect(form.FindByClass("apply-form")).Should(am.BeFound())	
 	time.Sleep(1000 * time.Millisecond)
 
 	gm.Expect(form.All("input")).Should(am.BeFound())

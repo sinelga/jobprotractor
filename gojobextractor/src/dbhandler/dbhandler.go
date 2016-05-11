@@ -15,7 +15,7 @@ func ExternalEmploers(dbsession mgo.Session) []domains.JobOffer {
 	c := dbsession.DB("cv_employers").C("employers")
 
 	var results []domains.JobOffer
-	err := c.Find(bson.M{"externallink": bson.M{"$ne": ""},"location":bson.RegEx{Pattern: "Finland", Options: "i"}}).All(&results)
+	err := c.Find(bson.M{"externallink": bson.M{"$ne": ""},"location":bson.RegEx{Pattern: "Finland", Options: "i"},"applied":false}).All(&results)
 
 	if err != nil {
 

@@ -3,6 +3,16 @@ package domains
 import (
 	"time"
 )
+type ServerConfig struct {
+	Login struct {
+		Glogin     string
+	
+	}
+	Pass struct {
+		Gpass        string
+	
+	}
+}
 
 type Tags struct {
 	
