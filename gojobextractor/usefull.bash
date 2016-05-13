@@ -16,5 +16,6 @@ db.getCollection('employers').find({"created_at" : { $gte : new ISODate("2016-05
 db.getCollection('employers').find({"created_at" : { $gte : new ISODate("2016-05-08T00:00:00Z") },"externallink":/mailto/})
 db.getCollection('employers').find({"created_at" : { $gte : new ISODate("2016-05-08T00:00:00Z") },"location":/Finland/})
 db.getCollection('employers').find({"externallink":{$ne:""},"location":/Finland/})
-
+db.getCollection('employers').find({"externallink":{$ne:""},"email":{$ne:""},"applied":false,"location":/Finland/})
+db.getCollection('employers').find({"externallink":"mailto:jobs@nitor.fi?subject=Full%20Stack%20Developer%20(via%20Stack%20Overflow%20Careers)&body=%0d%0a--%0d%0aFound%20via%20Stack%20Overflow%20Careers%0d%0a"}
 

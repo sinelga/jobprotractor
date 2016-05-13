@@ -8,6 +8,32 @@ import (
 	"log"
 )
 
+func UpdateExtEmploerEmail(dbsession mgo.Session, email domains.Email) {
+
+	dbsession.SetMode(mgo.Monotonic, true)
+
+	c := dbsession.DB("cv_employers").C("employers")
+
+	var joboffer domains.JobOffer
+
+	err := c.Find(bson.M{"id": email.Subject}).Limit(1).One(&joboffer)
+	if err != nil {
+
+		log.Fatal(err)
+	}
+
+	joboffer.Applied = true
+
+	err = c.Update(bson.M{"id": email.Subject}, joboffer)
+	if err != nil {
+
+		log.Fatal(err)
+	}
+
+//	fmt.Println("update->", joboffer)
+
+}
+
 func ExternalEmploers(dbsession mgo.Session) []domains.JobOffer {
 
 	dbsession.SetMode(mgo.Monotonic, true)
@@ -15,7 +41,7 @@ func ExternalEmploers(dbsession mgo.Session) []domains.JobOffer {
 	c := dbsession.DB("cv_employers").C("employers")
 
 	var results []domains.JobOffer
-	err := c.Find(bson.M{"externallink": bson.M{"$ne": ""},"location":bson.RegEx{Pattern: "Finland", Options: "i"},"applied":false}).All(&results)
+	err := c.Find(bson.M{"externallink": bson.M{"$ne": ""}, "location": bson.RegEx{Pattern: "Finland", Options: "i"}, "applied": false}).All(&results)
 
 	if err != nil {
 

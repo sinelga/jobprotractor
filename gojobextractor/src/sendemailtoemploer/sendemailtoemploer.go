@@ -17,7 +17,7 @@ var gpass = ""
 func init() {
 
 	var cfg domains.ServerConfig
-	if err := gcfg.ReadFileInto(&cfg, "config.gcfg"); err != nil {
+	if err := gcfg.ReadFileInto(&cfg, "/home/juno/git/jobprotractor/gojobextractor/config.gcfg"); err != nil {
 		log.Fatalln(err.Error())
 
 	} else {

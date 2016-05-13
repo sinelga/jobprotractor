@@ -3,6 +3,15 @@ package domains
 import (
 	"time"
 )
+
+type Email struct {
+	
+	To string
+	Subject	string
+	Body string
+	
+}
+
 type ServerConfig struct {
 	Login struct {
 		Glogin     string
