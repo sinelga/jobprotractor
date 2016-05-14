@@ -6,7 +6,7 @@ import (
 	//	"fmt"
 	"gopkg.in/gcfg.v1"
 	"log"
-	"net/smtp"
+//	"net/smtp"
 	//	"os"
 	//    "strconv"
 )
@@ -31,29 +31,29 @@ func init() {
 
 func main() {
 
-	send("hello there")
+//	send("hello there")
 
 }
-func send(body string) {
-	from := glogin
-	pass := gpass
-	to := "aleksander.mazurov@gmail.com"
-
-	myfrom := "support@mazurov.eu"
-
-	msg := "From: " + myfrom + "\n" +
-		"To: " + to + "\n" +
-		"Subject: Hello there\n\n" +
-		body
-
-	err := smtp.SendMail("smtp.gmail.com:587",
-		smtp.PlainAuth("", from, pass, "smtp.gmail.com"),
-		from, []string{to}, []byte(msg))
-
-	if err != nil {
-		log.Printf("smtp error: %s", err)
-		return
-	}
-
-	log.Print("sent, visit http://foobarbazz.mailinator.com")
-}
+//func send(body string) {
+//	from := glogin
+//	pass := gpass
+//	to := "aleksander.mazurov@gmail.com"
+//
+//	myfrom := "support@mazurov.eu"
+//
+//	msg := "From: " + myfrom + "\n" +
+//		"To: " + to + "\n" +
+//		"Subject: Hello there\n\n" +
+//		body
+//
+//	err := smtp.SendMail("smtp.gmail.com:587",
+//		smtp.PlainAuth("", from, pass, "smtp.gmail.com"),
+//		from, []string{to}, []byte(msg))
+//
+//	if err != nil {
+//		log.Printf("smtp error: %s", err)
+//		return
+//	}
+//
+//	log.Print("sent, visit http://foobarbazz.mailinator.com")
+//}

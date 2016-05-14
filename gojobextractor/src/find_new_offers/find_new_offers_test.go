@@ -14,16 +14,7 @@ import (
 //	am "github.com/sclevine/agouti/matchers"
 )
 
-//var dbsession *mgo.Session
 
-//func init() {
-//
-//	dbsession, err := mgo.Dial("127.0.0.1")
-//	if err != nil {
-//		panic(err)
-//	}
-//	defer dbsession.Close()
-//}
 
 func TestFindNewOffers(t *testing.T) {
 
@@ -39,7 +30,7 @@ func TestFindNewOffers(t *testing.T) {
 	page, err := driver.NewPage(agouti.Browser("chrome"))
 	gm.Expect(err).NotTo(gm.HaveOccurred())
 
-	for i := 45; i <47 ; i++ {
+	for i := 42; i <45 ; i++ {
 		
 		navigstr := "http://stackoverflow.com/jobs?sort=p&pg="+strconv.Itoa(i)
 		gm.Expect(page.Navigate(navigstr)).To(gm.Succeed())
@@ -62,7 +53,7 @@ func TestFindNewOffers(t *testing.T) {
 			(*newJobentry).FindLocation(page)
 
 			(*newJobentry).ExamDbRecord(*dbsession)
-
+			
 			gm.Expect(page.Back()).To(gm.Succeed())
 
 		}

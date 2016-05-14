@@ -37,7 +37,8 @@ func Create(emplayers []domains.JobOffer) []domains.Email {
 			body = body + "\n" + record[0]
 		}
 
-		body = body + "\n\nThanks.\n\nAlex Mazurov"
+		body = body + "\n\nThanks.\nAlex Mazurov"
+		body = body + "\n\nAtt:mazurov_cv.pdf"
 
 		emailtxt := domains.Email{joboffer.Email,joboffer.Id, body}
 

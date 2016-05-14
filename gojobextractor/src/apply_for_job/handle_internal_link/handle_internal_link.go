@@ -10,8 +10,8 @@ import (
 	"github.com/sclevine/agouti"
 	am "github.com/sclevine/agouti/matchers"
 	"gopkg.in/mgo.v2"
-	"time"
 	"strings"
+	"time"
 )
 
 type InternalJobOffer struct {
@@ -29,7 +29,7 @@ type InternalJobOffer struct {
 }
 
 func NewInternalJobOffers(job domains.JobOffer) *InternalJobOffer {
-//func NewInternalJobOffers() *InternalJobOffer {
+	//func NewInternalJobOffers() *InternalJobOffer {
 
 	return &InternalJobOffer{
 
@@ -44,7 +44,6 @@ func NewInternalJobOffers(job domains.JobOffer) *InternalJobOffer {
 		Created_at:   job.Created_at,
 		Applied:      job.Applied,
 		Description:  job.Description,
-
 	}
 
 }
@@ -60,48 +59,47 @@ func (jo *InternalJobOffer) Apply(dbsession mgo.Session, page *agouti.Page) {
 	count_links, _ := alllinks.Count()
 
 	var idtoapply int
-	idtoapply = 0	
-	
+	idtoapply = 0
+
 	for i := 0; i < count_links; i++ {
 
 		data_jobid, _ := alllinks.At(i).Attribute("data-jobid")
-		href,_ :=alllinks.At(i).Attribute("href")
-		
+		href, _ := alllinks.At(i).Attribute("href")
+
 		if data_jobid != "" {
 			text, _ := alllinks.At(i).Text()
-			id,_ :=alllinks.At(i).Attribute("id")
-			
-			if text == "apply now" && id =="apply" {
-				
-				fmt.Println("to click",text,id)				
+			id, _ := alllinks.At(i).Attribute("id")
+
+			if text == "apply now" && id == "apply" {
+
+				fmt.Println("to click", text, id)
 				idtoapply = i
-//				break
 
 			}
 
 		}
-		
-		if href !="" {
-			
-			if strings.HasPrefix(href,"mailto:") {
-				
-				emailtxt,_ :=alllinks.At(i).Text()
-				jo.Email=emailtxt
+
+		if href != "" {
+
+			if strings.HasPrefix(href, "mailto:") {
+
+				emailtxt, _ := alllinks.At(i).Text()
+				jo.Email = emailtxt
 			}
-			
-			
+
 		}
 
 	}
 
-	if idtoapply > 0 {	
+	if idtoapply > 0 {
+		fmt.Println("idtoapply",idtoapply)
+//		fmt.Println(alllinks.At(idtoapply))
 		jo.ElaborateFrame(dbsession, page, alllinks.At(idtoapply))
 
 	} else {
 
 		fmt.Println("Can't find apply link id->", idtoapply)
-		
-		
+
 	}
 
 }
@@ -109,12 +107,13 @@ func (jo *InternalJobOffer) Apply(dbsession mgo.Session, page *agouti.Page) {
 func (jo *InternalJobOffer) ElaborateFrame(dbsession mgo.Session, page *agouti.Page, link *agouti.Selection) {
 
 	gm.Expect(link.Click()).To(gm.Succeed())
-	
+
 	gm.Expect(page.FindByID("apply-dialog")).Should(am.BeFound())
 	form := page.FindByID("apply-dialog")
 
+// stop hear
 	time.Sleep(1000 * time.Millisecond)
-	gm.Expect(form.FindByClass("apply-form")).Should(am.BeFound())	
+	gm.Expect(form.FindByClass("apply-form")).Should(am.BeFound())
 	time.Sleep(1000 * time.Millisecond)
 
 	gm.Expect(form.All("input")).Should(am.BeFound())
@@ -149,7 +148,7 @@ func (jo *InternalJobOffer) ElaborateFrame(dbsession mgo.Session, page *agouti.P
 	fmt.Println("idtoinput", idtoinput)
 	fmt.Println("idbuttonsubmit", idbuttonsubmit)
 	//
-//	gm.Expect(allinputs.At(idtoinput).Click()).To(gm.Succeed())
+	//	gm.Expect(allinputs.At(idtoinput).Click()).To(gm.Succeed())
 	gm.Expect(allinputs.At(idtoinput).UploadFile("/home/juno/git/cv/version_desk_react_00/dist/mazurov_cv.pdf")).To(gm.Succeed())
 
 	mytagstoinsert := mytags.GetMyTags("/home/juno/git/jobprotractor/gojobextractor/mytags.csv", jo.Tags)
@@ -161,7 +160,7 @@ func (jo *InternalJobOffer) ElaborateFrame(dbsession mgo.Session, page *agouti.P
 	coverletter.SendKeys(coverlettertxt)
 	gm.Expect(allinputs.At(idbuttonsubmit).Submit()).To(gm.Succeed())
 	gm.Expect(page.ConfirmPopup()).To(gm.Succeed())
-	
+
 	jo.Applied = true
 
 	jo.UpdateApplyedEmployer(dbsession)
