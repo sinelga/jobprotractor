@@ -3,7 +3,7 @@ package find_emploers_for_email
 import (
 	"dbhandler"
 	"domains"
-	"fmt"
+//	"fmt"
 	"gopkg.in/mgo.v2"
 	"net/url"
 	"strings"
@@ -25,9 +25,9 @@ func FindEmpl(dbsession mgo.Session) []domains.JobOffer {
 			}
 			
 			cleanemail := strings.TrimLeft(strings.TrimRight(result.Externallink,u.RawQuery),"mailto:")
-			fmt.Println(result.Externallink)
+//			fmt.Println(result.Externallink)
 						
-			fmt.Println("cleanemail:",cleanemail[0:len(cleanemail)-1])
+//			fmt.Println("cleanemail:",cleanemail[0:len(cleanemail)-1])
 			cleanemail =cleanemail[0:len(cleanemail)-1]
 			result.Email=cleanemail
 //			result.Email="aleksander.mazurov@gmail.com"

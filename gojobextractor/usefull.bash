@@ -11,11 +11,12 @@ db.getCollection('employers').find({"created_at":{
     $gte: new Date(new Date().setDate(new Date().getDate()-1))
   }}   )
 
-db.getCollection('employers').find({"created_at" : { $gte : new ISODate("2016-05-08T00:00:00Z") }})
-db.getCollection('employers').find({"created_at" : { $gte : new ISODate("2016-05-08T00:00:00Z") },"externallink":""})
+db.getCollection('employers').find({"created_at" : { $gte : new ISODate("2016-05-08T00:00:00Z") },"applied":false})
+db.getCollection('employers').find({"created_at" : { $gte : new ISODate("2016-05-08T00:00:00Z") },"externallink":"","applied":false})
 db.getCollection('employers').find({"created_at" : { $gte : new ISODate("2016-05-08T00:00:00Z") },"externallink":/mailto/})
 db.getCollection('employers').find({"created_at" : { $gte : new ISODate("2016-05-08T00:00:00Z") },"location":/Finland/})
 db.getCollection('employers').find({"externallink":{$ne:""},"location":/Finland/})
 db.getCollection('employers').find({"externallink":{$ne:""},"email":{$ne:""},"applied":false,"location":/Finland/})
+db.getCollection('employers').find({"externallink":{$ne:""},"email":{$ne:""},"applied":false})
 db.getCollection('employers').find({"externallink":"mailto:jobs@nitor.fi?subject=Full%20Stack%20Developer%20(via%20Stack%20Overflow%20Careers)&body=%0d%0a--%0d%0aFound%20via%20Stack%20Overflow%20Careers%0d%0a"}
 
