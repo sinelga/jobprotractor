@@ -14,17 +14,17 @@ import (
 
 func SendAll(dbsession mgo.Session, emails []domains.Email, login string, pass string) {
 
-//	for _, email := range emails {
-//
-//		send(dbsession, login, pass, email)
-//		time.Sleep(3000 * time.Millisecond)
-//	}
+	for _, email := range emails {
 
-		for i := 0; i < 1; i++ {
-		
-			send(dbsession,login, pass, emails[i])
-			time.Sleep(3000 * time.Millisecond)
-		}
+		send(dbsession, login, pass, email)
+		time.Sleep(3000 * time.Millisecond)
+	}
+
+//		for i := 0; i < 1; i++ {
+//		
+//			send(dbsession,login, pass, emails[i])
+//			time.Sleep(3000 * time.Millisecond)
+//		}
 
 }
 func send(dbsession mgo.Session, glogin string, gpass string, emailtxt domains.Email) {

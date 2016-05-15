@@ -30,7 +30,7 @@ func TestFindNewOffers(t *testing.T) {
 	page, err := driver.NewPage(agouti.Browser("chrome"))
 	gm.Expect(err).NotTo(gm.HaveOccurred())
 
-	for i := 42; i <45 ; i++ {
+	for i := 40; i <41 ; i++ {
 		
 		navigstr := "http://stackoverflow.com/jobs?sort=p&pg="+strconv.Itoa(i)
 		gm.Expect(page.Navigate(navigstr)).To(gm.Succeed())

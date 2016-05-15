@@ -72,7 +72,7 @@ func (jo *InternalJobOffer) Apply(dbsession mgo.Session, page *agouti.Page) {
 
 			if text == "apply now" && id == "apply" {
 
-				fmt.Println("to click", text, id)
+//				fmt.Println("to click", text, id)
 				idtoapply = i
 
 			}
@@ -92,8 +92,8 @@ func (jo *InternalJobOffer) Apply(dbsession mgo.Session, page *agouti.Page) {
 	}
 
 	if idtoapply > 0 {
-		fmt.Println("idtoapply",idtoapply)
-//		fmt.Println(alllinks.At(idtoapply))
+//		fmt.Println("idtoapply",idtoapply)
+//		fmt.Println(alllinks.At(idtoapply).Text())
 		jo.ElaborateFrame(dbsession, page, alllinks.At(idtoapply))
 
 	} else {
@@ -113,6 +113,11 @@ func (jo *InternalJobOffer) ElaborateFrame(dbsession mgo.Session, page *agouti.P
 
 // stop hear
 	time.Sleep(1000 * time.Millisecond)
+	
+	apply_form := form.FindByClass("apply-form")
+	
+	fmt.Println("apply_form!!->",apply_form)
+	
 	gm.Expect(form.FindByClass("apply-form")).Should(am.BeFound())
 	time.Sleep(1000 * time.Millisecond)
 
@@ -152,7 +157,7 @@ func (jo *InternalJobOffer) ElaborateFrame(dbsession mgo.Session, page *agouti.P
 	gm.Expect(allinputs.At(idtoinput).UploadFile("/home/juno/git/cv/version_desk_react_00/dist/mazurov_cv.pdf")).To(gm.Succeed())
 
 	mytagstoinsert := mytags.GetMyTags("/home/juno/git/jobprotractor/gojobextractor/mytags.csv", jo.Tags)
-	fmt.Println(mytagstoinsert)
+//	fmt.Println(mytagstoinsert)
 	coverlettertxt := coverletter.Create(mytagstoinsert, "/home/juno/git/jobprotractor/gojobextractor/coverletter.csv")
 
 	gm.Expect(form.FindByID("CoverLetter")).Should(am.BeFound())
@@ -160,7 +165,7 @@ func (jo *InternalJobOffer) ElaborateFrame(dbsession mgo.Session, page *agouti.P
 	coverletter.SendKeys(coverlettertxt)
 	gm.Expect(allinputs.At(idbuttonsubmit).Submit()).To(gm.Succeed())
 	gm.Expect(page.ConfirmPopup()).To(gm.Succeed())
-
+	time.Sleep(1000 * time.Millisecond)
 	jo.Applied = true
 
 	jo.UpdateApplyedEmployer(dbsession)
