@@ -41,7 +41,7 @@ func ExternalEmploers(dbsession mgo.Session) []domains.JobOffer {
 	c := dbsession.DB("cv_employers").C("employers")
 
 	var results []domains.JobOffer
-//!!!	err := c.Find(bson.M{"externallink": bson.M{"$ne": ""}, "location": bson.RegEx{Pattern: "Finland", Options: "i"}, "applied": false}).All(&results)
+//	err := c.Find(bson.M{"externallink": bson.M{"$ne": ""}, "location": bson.RegEx{Pattern: "Sweden", Options: "i"}, "applied": false}).All(&results)
 	err := c.Find(bson.M{"externallink": bson.M{"$ne": ""},"applied": false}).All(&results)
 
 	if err != nil {
@@ -122,3 +122,18 @@ func UpdateEmployer(dbsession mgo.Session, joboffer domains.JobOffer) {
 	}
 
 }
+
+func UpdateEmployerById(dbsession mgo.Session, id string) {
+
+	dbsession.SetMode(mgo.Monotonic, true)
+
+	c := dbsession.DB("cv_employers").C("employers")
+
+	err := c.Update(bson.M{"id": id}, bson.M{"$set": bson.M{"applied": true}})
+	if err != nil {
+
+		log.Fatal(err)
+	}
+
+}
+
