@@ -26,6 +26,7 @@ func TestFindNewOffers(t *testing.T) {
 
 	gm.RegisterTestingT(t)
 	driver := agouti.ChromeDriver()
+//	driver := agouti.PhantomJS()
 	gm.Expect(driver.Start()).To(gm.Succeed())
 	page, err := driver.NewPage(agouti.Browser("chrome"))
 	gm.Expect(err).NotTo(gm.HaveOccurred())
